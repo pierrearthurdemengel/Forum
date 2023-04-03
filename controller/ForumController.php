@@ -18,12 +18,18 @@
             return [
                 "view" => VIEW_DIR."forum/listTopics.php",
                 "data" => [
-                    "topics" => $topicManager->findAll(["creationdate", "DESC"])
+                    "topics" => $topicManager->findAll(["creationDate", "DESC"])
                     // la méthode "findAll" est une méthode générique qui provient de l'AbstractController (dont hérite chaque controller de l'application)
                 ]
             ];
         
         }
+
+        public function listTopics() 
+        {
+
+        }
+        
 
         
         // exemple format = index.php?ctrl=forum&action=listTopics Cette URL veut dire qu'on va appeler la méthode listTopics du ForumController

@@ -24,13 +24,15 @@
                         if(App\Session::isAdmin()){
                             ?>
                             <a href="index.php?ctrl=home&action=users">Voir la liste des gens</a>
-                          
+                            <a href="index.php?ctrl=forum&action=listTopics">liste des topics</a>
+                            <a href="index.php?ctrl=forum&action=listCategory">liste des categories</a>
+                            
                             <?php
                         }
                         ?>
                     </div>
                     <div id="nav-right">
-                    <?php
+                        <?php
                         
                         if(App\Session::getUser()){
                             ?>
@@ -43,7 +45,8 @@
                             <a href="./view/security/login.php">Connexion</a>
                             <a href="/security/register.html">Inscription</a>
                             <a href="index.php?ctrl=forum&action=listTopics">la liste des topics</a>
-                        <?php
+                            <a href="index.php?ctrl=category&action=listCategory">liste des categories</a>
+                            <?php
                         }
                    
                         
