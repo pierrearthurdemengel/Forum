@@ -5,7 +5,7 @@ namespace Model\Managers;
 
 use App\Manager;
 use App\DAO;
-use Model\Managers\CategoryManager;
+use Model\Managers\CategoryController;
 
 class CategoryManager extends Manager{
 
@@ -30,6 +30,4 @@ class CategoryManager extends Manager{
             $this -> className
         );
     }
-
-
 }
