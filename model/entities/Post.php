@@ -1,7 +1,8 @@
 <?php 
+    namespace Model\Entities;
 
-// Chaque Entity va hériter de la classe Entity (dans le dossier App) et 
-// toutes les Entities auront exactement le même constructeur qui implémente la méthode "hydrate" (de cette même classe Entity)
+    use App\Entity;
+
 final class Post extends Entity{
     private $id;
     private $title;
@@ -127,7 +128,7 @@ final class Post extends Entity{
          *
          * @return  self
          */ 
-        public function setTopi($topic)
+        public function setTopic($topic)
         {
                 $this->topic = $topic;
 

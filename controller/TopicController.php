@@ -7,9 +7,7 @@
     use App\ControllerInterface;
     use Model\Managers\TopicManager;
     use Model\Managers\PostManager;
-    use Model\Entities\Topic;
-    use Model\Entities\User;
-    use Model\Forum\infoTopic;
+
     
     class TopicController extends AbstractController implements ControllerInterface{
 
@@ -28,10 +26,13 @@
 
         public function infoTopic($id){
             $topicManager = new TopicManager();
+            $postManager = new PostManager();
+            var_dump($postManager->findPostByTopic($id)->current());die;
             return [
-                "view" => VIEW_DIR."forum/infoTopic.php",
-                "data" => [
-                    "topic" => $topicManager->findOneById($id)
+                "view" => VIEW_DIR."forum/infoTopic.php", //choisis la vue
+                "data" => [         //crée le(s) tableau(x) avec la data dont j'ai beosin dans 
+                    "topic" => $topicManager->findOneById($id), 
+                    "posts" => $postManager->findPostByTopic($id)
                 ]
             ];
         }
@@ -46,15 +47,7 @@
             ];
           }
         
-          public function listPostByTopic($id){
-            $topicManager = new PostManager();
-            
-            return 
-            [
-             "view" => VIEW_DIR . "forum/listPosts.php",
-             "data" => ["post" => $topicManager->findTopicByCategory($id)]   
-            ];
-          }
+
         
 
 

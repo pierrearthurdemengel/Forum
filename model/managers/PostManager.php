@@ -5,7 +5,7 @@ namespace Model\Managers;
 
 use App\Manager;
 use App\DAO;
-use Model\Managers\PostManager;
+use Model\Managers\listPosts;
 
 class PostManager extends Manager{
 
@@ -26,8 +26,24 @@ class PostManager extends Manager{
 
         return $this->getMultipleResults(
             // ou getOneOrNullResult si un seul objet
-            DAO::query($sql, ['id' => $id]),
+            DAO::select($sql, ['id' => $id]),
             $this -> className
+        );
+    }
+
+    
+    public function findPostByTopic($id)
+    {
+        $sql = "SELECT *
+            FROM ". $this->tableName." p
+            WHERE p.topic_id = :id";
+
+        //   var_dump($sql);die;
+
+        return $this->getMultipleResults(
+            // ou getOneOrNullResult si un seul objet
+            DAO::select($sql, ['id' => $id], TRUE),
+            $this->className
         );
     }
 

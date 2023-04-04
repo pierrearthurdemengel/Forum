@@ -1,7 +1,6 @@
 <?php
 // récupère les données envoyées par le contrôleur à travers la variable $result et la clé data, qui contient un tableau associatif de données. La clé 'topics' est extraite de ce tableau à travers $result["data"]['topics'] et assignée à une variable $topics.
-if(isset($result["data"]['topics']))
-{
+if (isset($result["data"]['topics'])) {
     $topics = $result["data"]['topics'];
 }
 
@@ -11,16 +10,17 @@ if(isset($result["data"]['topics']))
 
 <h1>liste topics</h1>
 <?php
-if(isset($topics)){
-foreach($topics as $topic ){
-    
-    ?>
-    <div> 
-        <a href="index.php?ctrl=topic&action=infoTopic&id=<?=$topic->getId()?>"><?=$topic->getTopicName()?></a>
-        <p><?=$topic->getCreationDate()?></p>
-        <a><?=$topic->getUser()->getPseudo()?></a>
-        <a><?=$topic->getCategory()->getCategoryName()?></a>
-    </div>
-    <?php
-}}
+if (isset($topics)) {
+    foreach ($topics as $topic) {
 
+?>
+        <div>
+            <a href="index.php?ctrl=topic&action=infoTopic&id=<?= $topic->getId() ?>"><?= $topic->getTopicName() ?></a>
+            <p><?= $topic->getCreationDate() ?></p>
+            <a><?= $topic->getUser()->getPseudo() ?></a>
+            <a><?= $topic->getCategory()->getCategoryName() ?></a>
+        </div>
+
+<?php
+    }
+}

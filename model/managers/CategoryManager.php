@@ -14,11 +14,13 @@ class CategoryManager extends Manager{
     protected $tableName = "category";
 
 
-    public function __construct(){
+    public function __construct()
+    {
         parent::connect();
     }
 
-    public function findCategory($id) {
+    public function findCategory($id) 
+    {
         $sql = "SELECT *
         FROM " . $this->tableName." p
         WHERE p.topic_id = :id";
