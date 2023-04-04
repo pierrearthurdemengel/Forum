@@ -14,6 +14,10 @@ $categorys = $result["data"]['category'];
 foreach($categorys as $category ){
 
     ?>
-    <p><?=$category->getCategoryName()?></p>
+<div>
+    <a href="index.php?ctrl=topic&action=listTopicByCategory&id=<?=$category->getId()?>"><?=$category->getCategoryName()?></a>
+    <a><?=$category->getUser()->getPseudo()?></a>
+    <a><?=$category->getDateCreation()?></a>
+</div>
     <?php
 }

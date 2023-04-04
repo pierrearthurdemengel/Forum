@@ -28,5 +28,19 @@
             );
         }
 
+        public function findPostByTopic($id) {
+            $sql = "SELECT *
+            FROM " . $this->tableName." t
+            WHERE t.category_id = :id";
+    
+            // var_dump($sql);die;
+    
+            return $this->getMultipleResults(
+                // ou getOneOrNullResult si un seul objet
+                DAO::select($sql, ['id' => $id], TRUE),
+                $this -> className
+            );
+        }
+
 
     }

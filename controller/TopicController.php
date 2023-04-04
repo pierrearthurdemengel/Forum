@@ -9,6 +9,7 @@
     use Model\Managers\PostManager;
     use Model\Entities\Topic;
     use Model\Entities\User;
+    use Model\Forum\infoTopic;
     
     class TopicController extends AbstractController implements ControllerInterface{
 
@@ -23,7 +24,6 @@
                     // la méthode "findAll" est une méthode générique qui provient de l'AbstractController (dont hérite chaque controller de l'application)
                 ]
             ];
-        
         }
 
         public function infoTopic($id){
@@ -36,8 +36,27 @@
             ];
         }
 
+        public function listTopicByCategory($id){
+            $topicManager = new TopicManager();
+            
+            return 
+            [
+             "view" => VIEW_DIR . "forum/listTopics.php",
+             "data" => ["topics" => $topicManager->findTopicByCategory($id)]   
+            ];
+          }
         
+          public function listPostByTopic($id){
+            $topicManager = new PostManager();
+            
+            return 
+            [
+             "view" => VIEW_DIR . "forum/listPosts.php",
+             "data" => ["post" => $topicManager->findTopicByCategory($id)]   
+            ];
+          }
         
+
 
         
 

@@ -12,18 +12,18 @@ use Model\Managers\CategoryManager;
 class CategoryController extends AbstractController implements ControllerInterface
 {
 
-    public function index()
-    {
-        $topicManager = new TopicManager();
+    // public function index()
+    // {
+    //     $topicManager = new TopicManager();
 
-        return [
-            "view" => VIEW_DIR . "forum/listTopics.php",
-            "data" => [
-                "topics" => $topicManager->findAll(["creationDate", "DESC"])
-                // la méthode "findAll" est une méthode générique qui provient de l'AbstractController (dont hérite chaque controller de l'application)
-            ]
-        ];
-    }
+    //     return [
+    //         "view" => VIEW_DIR . "forum/listTopics.php",
+    //         "data" => [
+    //             "topics" => $topicManager->findAll(["creationDate", "DESC"])
+    //             // la méthode "findAll" est une méthode générique qui provient de l'AbstractController (dont hérite chaque controller de l'application)
+    //         ]
+    //     ];
+    // }
 
     
     public function listCategorys()
