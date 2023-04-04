@@ -17,7 +17,7 @@
         }
  
          /**
-         * Get the value of id_user
+         * Get the value of id_topic
          */ 
         public function getId()
         {
@@ -25,7 +25,7 @@
         }
 
         /**
-         * Set the value of id_user
+         * Set the value of id_topic
          *
          * @return  self
          */ 
@@ -60,7 +60,7 @@
         /**
          * Get and set the value of creationdate
          */ 
-        public function getCreationdate(){
+        public function getCreationDate(){
             $formattedDate = $this->creationDate->format("d/m/Y, H:i:s");
             return $formattedDate;
         }
@@ -113,7 +113,7 @@
                 /**
          * Get the value of category_id
          */ 
-        public function getcategory()
+        public function getCategory()
         {
                 return $this->category;
         }

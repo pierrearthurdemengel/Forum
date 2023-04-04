@@ -12,10 +12,12 @@ $topics = $result["data"]['topics'];
 foreach($topics as $topic ){
 
     ?>
-    <p><?=$topic->getTopicName()?></p>
+    <div> 
+        <a href="index.php?ctrl=topic&action=infoTopic&id=<?=$topic->getId()?>"><?=$topic->getTopicName()?></a>
+        <p><?=$topic->getCreationDate()?></p>
+        <a><?=$topic->getUser()->getPseudo()?></a>
+        <a><?=$topic->getCategory()->getCategoryName()?></a>
+    </div>
     <?php
 }
 
-
-  
-// je n'arrive pas à renvoyer une vue avec le controller

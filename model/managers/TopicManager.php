@@ -3,7 +3,6 @@
     
     use App\Manager;
     use App\DAO;
-    use Model\Managers\TopicManager;
 
     class TopicManager extends Manager{
 
@@ -24,7 +23,7 @@
     
             return $this->getMultipleResults(
                 // ou getOneOrNullResult si un seul objet
-                DAO::query($sql, ['id' => $id]),
+                DAO::select($sql, ['id' => $id], TRUE),
                 $this -> className
             );
         }
