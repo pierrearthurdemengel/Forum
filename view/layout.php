@@ -19,13 +19,16 @@
             <header>
                 <nav>
                     <div id="nav-left">
-                        <a href="/">Accueil</a>
+                        <a href="index.php?ctrl=index">Accueil</a>
                         <?php
                         if(App\Session::isAdmin()){
                             ?>
                             <a href="index.php?ctrl=home&action=users">Voir la liste des gens</a>
                             <a href="index.php?ctrl=forum&action=listTopics">liste des topics</a>
-                            <a href="index.php?ctrl=forum&action=listCategory">liste des categories</a>
+                            <a href="index.php?ctrl=forum&action=listCategorys">liste des categories</a>
+                            <!-- "index.php?+ctrl=NOMCONTROLLER&action=NOMACTION"-->
+                            <!-- si il ne trouve pas -> redirige vers home -->
+
                             
                             <?php
                         }
@@ -45,7 +48,7 @@
                             <a href="./view/security/login.php">Connexion</a>
                             <a href="/security/register.html">Inscription</a>
                             <a href="index.php?ctrl=forum&action=listTopics">la liste des topics</a>
-                            <a href="index.php?ctrl=category&action=listCategory">liste des categories</a>
+                            <a href="index.php?ctrl=category&action=listCategorys">liste des categories</a>
                             <?php
                         }
                    

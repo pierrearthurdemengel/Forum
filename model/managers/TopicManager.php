@@ -15,5 +15,19 @@
             parent::connect();
         }
 
+        public function findTopicByCategory($id) {
+            $sql = "SELECT *
+            FROM " . $this->tableName." t
+            WHERE t.category_id = :id";
+    
+            // var_dump($sql);die;
+    
+            return $this->getMultipleResults(
+                // ou getOneOrNullResult si un seul objet
+                DAO::query($sql, ['id' => $id]),
+                $this -> className
+            );
+        }
+
 
     }

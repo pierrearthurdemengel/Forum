@@ -6,6 +6,7 @@ namespace Model\Managers;
 use App\Manager;
 use App\DAO;
 use Model\Managers\CategoryController;
+use Model\Managers\listCategorys;
 
 class CategoryManager extends Manager{
 
@@ -17,7 +18,7 @@ class CategoryManager extends Manager{
         parent::connect();
     }
 
-    public function findCategorysByTopic($id) {
+    public function findCategory($id) {
         $sql = "SELECT *
         FROM " . $this->tableName." p
         WHERE p.topic_id = :id";

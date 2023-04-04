@@ -7,6 +7,8 @@
     use App\ControllerInterface;
     use Model\Managers\TopicManager;
     use Model\Managers\PostManager;
+    use Model\Entities\Topic;
+    use Model\Entities\User;
     
     class ForumController extends AbstractController implements ControllerInterface{
 
@@ -14,7 +16,6 @@
           
 
            $topicManager = new TopicManager();
-
             return [
                 "view" => VIEW_DIR."forum/listTopics.php",
                 "data" => [
@@ -25,10 +26,7 @@
         
         }
 
-        public function listTopics() 
-        {
-
-        }
+        
         
 
         

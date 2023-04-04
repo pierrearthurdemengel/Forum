@@ -33,12 +33,13 @@
         $ctrlNS = "controller\\".DEFAULT_CTRL."Controller";
     }
     $ctrl = new $ctrlNS();
-
+    
     $action = "index";//action par défaut de n'importe quel contrôleur
     //si l'action est présente dans l'url ET que la méthode correspondante existe dans le ctrl
     if(isset($_GET['action']) && method_exists($ctrl, $_GET['action'])){
         //la méthode à appeller sera celle de l'url
         $action = $_GET['action'];
+        
     }
     if(isset($_GET['id'])){
         $id = $_GET['id'];
@@ -55,6 +56,7 @@
     else{
         ob_start();//démarre un buffer (tampon de sortie)
         /*la vue s'insère dans le buffer qui devra être vidé au milieu du layout*/
+        
         include($result['view']);
         /*je mets cet affichage dans une variable*/
         $page = ob_get_contents();

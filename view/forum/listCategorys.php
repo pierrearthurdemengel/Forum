@@ -14,6 +14,6 @@ $categorys = $result["data"]['category'];
 foreach($categorys as $category ){
 
     ?>
-    <p><?=$category->getTitle()?></p>
+    <p><?=$category->getCategoryName()?></p>
     <?php
 }

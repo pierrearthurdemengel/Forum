@@ -1,6 +1,9 @@
 <?php 
+    namespace Model\Entities;
 
-final class Post extends Entity{
+use App\Entity;
+
+final class User extends Entity{
     private $id;
     private $pseudo;
     private $email;
@@ -133,23 +136,3 @@ final class Post extends Entity{
         }
     
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-?>
