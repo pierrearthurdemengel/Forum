@@ -32,5 +32,37 @@ class TopicManager extends Manager
         );
     }
 
+    public function addPost($text)
+    {
+            $sql = "INSERT INTO " . $this->tableName . " (text)
+            VALUES (:text)";
 
+        //  var_dump($sql);die;
+
+        $params = array(
+
+            'text' => $text,
+
+        );
+
+        DAO::insert($sql, $params);
+
+        // //Exemple d'insertion de données dans une table nommée 'ma_table'
+        // $sql = "INSERT INTO post (text-input) VALUES (:text)";
+
+        // //les valeurs à insérer
+        // $valeurs = array(
+        //     'text-input' => 'text'
+        // );
+
+        // //on exécute la requête
+        // $resultat = Post::insert($sql, $valeurs);
+
+        // //vérification du succès de l'opération
+        // if ($resultat !== false) {
+        //     echo "L'insertion a réussi, l'id de l'enregistrement ajouté est : " . $resultat;
+        // } else {
+        //     echo "L'insertion a échoué.";
+        // }
+    }
 }
