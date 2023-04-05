@@ -26,23 +26,45 @@ class CategoryController extends AbstractController implements ControllerInterfa
     }
 
     
-    public function listCategorys()
+    public function listPostByTopic($id)
     {
-        $categoryManager = new CategoryManager();
-        return
+        $topicManager = new TopicManager();
+        $postManager = new PostManager();
+
+        return 
             [
-                "view" => VIEW_DIR . "forum/listCategorys.php",
-                "data" => [
-                    "category" => $categoryManager->findAll(["dateCreation", "DESC"])
+                "view" => VIEW_DIR."forum/listPosts.php",
+                "data" => 
+                [
+                    "topic" => $topicManager->findOneById($id),
+                    "posts" => $postManager->listPostByTopic($id),
                 ]
             ];
-        }
+    }
+    else 
+    {
+        return 
+        [
+            "view" => VIEW_DIR."forum/listTopics.php",
+            "data" => 
+            [
+                "topics" => $topicManager->findAll(["topicName", "DESC"]),
+                "posts" => $postManager->findAll(["text", "DESC"]),
+            ]
+        ];
+    }
+
         
-    public function addNewPost($id){
+    public function addPost($id){
         $PostManager = new PostManager();
         
             if(isset($_POST['submit'])) {
-                $text = filter_input()
+                $text = filter_input(INPUT_POST, "text", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+
+                if($text) {
+                    $PostManager->add(["text" => $text]);
+                    $this->redirectTo('forum', 'postByTopic', $id);
+                }
             }
         
     }

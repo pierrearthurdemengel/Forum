@@ -8,7 +8,7 @@ if (isset($result["data"]['topics'])) {
 // utilise une boucle foreach pour parcourir chaque élément de la variable $topics. À chaque itération, le titre du sujet est récupéré à l'aide de la méthode getTitle() et affiché dans un paragraphe HTML <p>.
 ?>
 
-<h1>liste topics</h1>
+<h1>liste topics de <?= $category->getCategoryName() ?></h1>
 <?php
 if (isset($topics)) {
     foreach ($topics as $topic) {

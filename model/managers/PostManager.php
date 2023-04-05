@@ -17,19 +17,9 @@ class PostManager extends Manager{
         parent::connect();
     }
 
-    public function findPostsByTopic($id) {
-        $sql="SELECT *
-        FROM ".$this->tableName."
-        WHERE topic_id = :id
-        ORDER BY postDate DESC";
 
-        return $this-> getMultipleResults(
-            DAO::select($sql,['id'=>$id],true),
-            $this->className
-        );
-    }
 
-    
+// sortir la suite de postes par topic
     public function findPostByTopic($id)
     {
         $sql = "SELECT *
@@ -44,27 +34,4 @@ class PostManager extends Manager{
             $this->className
         );
     }
-
-
-    public function addPost($id)
-    {
-        $PostManager = new PostManager();
-        // //Exemple d'insertion de données dans une table nommée 'ma_table'
-        {
-            if (isset($_POST["submit"])) {
-                 
-                $text = filter_input(INPUT_POST, "text", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-    
-    
-                if ($text) {
-    
-                    $PostManager = add(["text" => $text]);
-                    
-                    $this->redirectTo('forum', 'findPostsByTopic', $id);
-
-                }
-            }
-        }
-    }
-
 }

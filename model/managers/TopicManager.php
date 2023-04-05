@@ -32,21 +32,4 @@ class TopicManager extends Manager
             $this->className
         );
     }
-
-    public function addTopic($id)
-    {
-        $TopicManager = new TopicManager();
-        $PostManager = new PostManager();
-
-            if(isset($_POST['submit'])){
-                $topicName = filter_input(INPUT_POST, "topicName", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-
-            if($topicName){
-                $newTopic = $ $TopicManager->add(["topicName" => $topicName]);
-                $PostManager->add(["text"]);
-                $this->redirecTo("forum", 'postSelectbyTopic', $newTopic);
-            }
-
-            }
-    }
 }

@@ -51,4 +51,8 @@ class TopicController extends AbstractController implements ControllerInterface
                 "data" => ["topics" => $topicManager->findTopicByCategory($id)]
             ];
     }
+
+    public function addTopic($id){
+        
+    }
 }

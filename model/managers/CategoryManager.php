@@ -33,4 +33,13 @@ class CategoryManager extends Manager{
             $this -> className
         );
     }
+
+    public function addCategory($id){
+        $sql = "INSERT INTO category (categoryName) VALUES (:category)";
+
+        return $this-> getMultipleResults(
+            DAO::select($sql, ['id' => $id], true),
+            $this->className
+        );
+    }
 }
