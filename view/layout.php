@@ -24,7 +24,6 @@
                         if(App\Session::isAdmin()){
                             ?>
                             <a href="index.php?ctrl=home&action=users">Voir la liste des gens</a>
-                            <a href="index.php?ctrl=forum&action=listTopics">liste des topics</a>
                             <a href="index.php?ctrl=forum&action=listCategorys">liste des categories</a>
 
                             <!-- "index.php?+ctrl=NOMCONTROLLER&action=NOMACTION"-->
@@ -48,7 +47,6 @@
                             ?>
                             <a href="./view/security/login.php">Connexion</a>
                             <a href="/security/register.html">Inscription</a>
-                            <a href="index.php?ctrl=forum&action=listTopics">la liste des topics</a>
                             <a href="index.php?ctrl=category&action=listCategorys">liste des categories</a>
 
                             <?php

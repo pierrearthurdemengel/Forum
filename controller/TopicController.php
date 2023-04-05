@@ -52,7 +52,11 @@ class TopicController extends AbstractController implements ControllerInterface
             ];
     }
 
-    public function addTopic($id){
-        
-    }
+    // public function addTopic($id){ //à finir
+    //     $PostManager = new PostManager();
+
+    //     if(isset($_POST['submit'])) {
+    //         $text = 
+    //     }
+    // }
 }

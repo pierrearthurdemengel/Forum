@@ -25,6 +25,18 @@ class CategoryController extends AbstractController implements ControllerInterfa
         ];
     }
 
+    public function listCategorys()
+    {
+        $categoryManager = new CategoryManager();
+        return
+            [
+                "view" => VIEW_DIR . "forum/listCategorys.php",
+                "data" => [
+                    "category" => $categoryManager->findAll(["dateCreation", "DESC"])
+                ]
+            ];
+    }
+
     
     public function listTopicByCategory($id) //à faire
     {
@@ -38,7 +50,7 @@ class CategoryController extends AbstractController implements ControllerInterfa
                     "topic" => $topicManager->findOneById(),
                     "posts" => $postManager->listTopicByCategory()
                 ]
-            ]
+                ];
     }
 
 

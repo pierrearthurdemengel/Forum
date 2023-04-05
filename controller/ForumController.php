@@ -7,6 +7,7 @@ use App\AbstractController;
 use App\ControllerInterface;
 use Model\Managers\TopicManager;
 use Model\Managers\PostManager;
+use Model\Managers\CategoryManager;
 use Model\Managers\UserManager;
 use Model\Entities\Topic;
 use Model\Entities\User;
@@ -21,7 +22,6 @@ class ForumController extends AbstractController implements ControllerInterface
             "view" => VIEW_DIR . "forum/listCategorys.php",
             "data" => [
                 "categorys" => $categoryManager->findAll(["dateCreation", "DESC"])
-                // la méthode "findAll" est une méthode générique qui provient de l'AbstractController (dont hérite chaque controller de l'application)
             ]
         ];
     }

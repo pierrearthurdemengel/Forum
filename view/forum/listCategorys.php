@@ -17,7 +17,7 @@ if (isset($categorys)) {
 
 ?>
         <div>
-            <a href="index.php?ctrl=topic&action=listTopicByCategory&id=<?= $category->getId() ?>"><?= $category->getCategoryName() ?></a>
+            <a href="index.php?ctrl=topic&action=listCategory&id=<?= $category->getId() ?>"><?= $category->getCategoryName() ?></a>
         </div>
 <?php }}
 ?>
