@@ -14,12 +14,12 @@ class CategoryController extends AbstractController implements ControllerInterfa
 
     public function index()
     {
-        $topicManager = new TopicManager();
+        $categoryManager = new CategoryManager();
 
         return [
-            "view" => VIEW_DIR . "forum/listTopics.php",
+            "view" => VIEW_DIR . "forum/listCategorys.php",
             "data" => [
-                "topics" => $topicManager->findAll(["creationDate", "DESC"])
+                "categorys" => $categoryManager->findAll(["CategoryName", "DESC"])
                 // la méthode "findAll" est une méthode générique qui provient de l'AbstractController (dont hérite chaque controller de l'application)
             ]
         ];
@@ -32,7 +32,7 @@ class CategoryController extends AbstractController implements ControllerInterfa
             [
                 "view" => VIEW_DIR . "forum/listCategorys.php",
                 "data" => [
-                    "category" => $categoryManager->findAll(["dateCreation", "DESC"])
+                    "category" => $categoryManager->findAll()
                 ]
             ];
     }
@@ -48,7 +48,8 @@ class CategoryController extends AbstractController implements ControllerInterfa
                 "view" => VIEW_DIR."forum/listPosts.php",
                 "data" => [
                     "topic" => $topicManager->findOneById(),
-                    "posts" => $postManager->listTopicByCategory()
+                    "posts" => $postManager->listPostByTopic()
+                    //Call to unknown method: Model\Managers\PostManager::listPostByTopic()
                 ]
                 ];
     }

@@ -17,7 +17,7 @@ if (isset($categorys)) {
 
 ?>
         <div>
-            <a href="index.php?ctrl=topic&action=listCategory&id=<?= $category->getId() ?>"><?= $category->getCategoryName() ?></a>
+            <a href="index.php?ctrl=topic&action=listTopics&id=<?= $category->getId() ?>"><?= $category->getCategoryName() ?></a>
         </div>
 <?php }}
 ?>
@@ -26,5 +26,3 @@ if (isset($categorys)) {
         <input type="text" name="categoryName" placeholder="Category" required>
     </label>
 </form>
-
-

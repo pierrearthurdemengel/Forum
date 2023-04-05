@@ -5,8 +5,6 @@ namespace Model\Managers;
 
 use App\Manager;
 use App\DAO;
-use Model\Managers\CategoryController;
-use Model\Managers\listCategorys;
 
 class CategoryManager extends Manager{
 
@@ -40,6 +38,20 @@ class CategoryManager extends Manager{
         return $this-> getMultipleResults(
             DAO::select($sql, ['id' => $id], true),
             $this->className
+        );
+    }
+
+    public function listCategorys($id)
+    {
+        $sql = "SELECT *
+        FROM " . $this->tableName;
+
+        // var_dump($sql);die;
+
+        return $this->getMultipleResults(
+            // ou getOneOrNullResult si un seul objet
+            DAO::select($sql, ['id' => $id], true),
+            $this -> className
         );
     }
 }

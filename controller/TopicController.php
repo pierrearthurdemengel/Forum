@@ -7,6 +7,7 @@ use App\AbstractController;
 use App\ControllerInterface;
 use Model\Managers\TopicManager;
 use Model\Managers\PostManager;
+use Model\Managers\CategoryManager;
 
 
 class TopicController extends AbstractController implements ControllerInterface
@@ -43,12 +44,24 @@ class TopicController extends AbstractController implements ControllerInterface
 
     public function listTopicByCategory($id)
     {
+        $categoryManager = new CategoryManager();
+        $category = $categoryManager->findOneById($id);
         $topicManager = new TopicManager();
+
+        if(isset($_SESSION['user'])) {
+            $topics = $topicManager->listTopicByCategory($id);
+        } else {
+            $topics = null;
+        }
 
         return
             [
                 "view" => VIEW_DIR . "forum/listTopics.php",
-                "data" => ["topics" => $topicManager->findTopicByCategory($id)]
+                "data" => 
+                [
+                    "topics" => $topicManager->findTopicByCategory($id),
+                    "category" => $category
+                ]
             ];
     }
 
