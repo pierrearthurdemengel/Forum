@@ -27,7 +27,7 @@
         public function infoTopic($id){
             $topicManager = new TopicManager();
             $postManager = new PostManager();
-            var_dump($postManager->findPostByTopic($id)->current());die;
+
             return [
                 "view" => VIEW_DIR."forum/infoTopic.php", //choisis la vue
                 "data" => [         //crée le(s) tableau(x) avec la data dont j'ai beosin dans 

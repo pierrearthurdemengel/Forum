@@ -28,12 +28,12 @@ if (isset($result["data"]['posts'])) {
 
 <a><?=$post->getId()?></a>
 
-<a><?=$post->getTitle()?></a> <!-- getTitle non récupéré !!!!! -->
+    <a><?=$post->getTitle()?></a> <!-- getTitle non récupéré !!!!! -->
     <a><?=$post->getText()?></a>
     <a><?=$post->getDatePost()?></a>
     <a><?="créé par ".$post->getUser()->getPseudo()?></a>
     <a><?=$topic->getTopicName()?></a>
-    <a><?=$post->getCategory()->getCategoryName()?></a>
+
 
     <?php } ?>
 </span>
