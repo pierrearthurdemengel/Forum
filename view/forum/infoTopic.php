@@ -36,6 +36,11 @@ if (isset($result["data"]['posts'])) {
 
 
     <?php } ?>
+
+    <form>
+        <label for="text-input">Répondre avec un nouveau message :</label><br>
+        <input type="text" id="text-input" name="text-input"><br>
+    </form>
 </span>
 
 
