@@ -26,7 +26,7 @@
                             <a href="index.php?ctrl=home&action=users">Voir la liste des gens</a>
                             <a href="index.php?ctrl=forum&action=listTopics">liste des topics</a>
                             <a href="index.php?ctrl=forum&action=listCategorys">liste des categories</a>
-                            <a href="index.php?ctrl=forum&action=listPosts">liste des messages</a>
+
                             <!-- "index.php?+ctrl=NOMCONTROLLER&action=NOMACTION"-->
                             <!-- si il ne trouve pas -> redirige vers home -->
 
@@ -50,7 +50,7 @@
                             <a href="/security/register.html">Inscription</a>
                             <a href="index.php?ctrl=forum&action=listTopics">la liste des topics</a>
                             <a href="index.php?ctrl=category&action=listCategorys">liste des categories</a>
-                            <a href="index.php?ctrl=forum&action=listPosts">liste des messages</a>
+
                             <?php
                         }
                    

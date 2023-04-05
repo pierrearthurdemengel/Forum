@@ -12,8 +12,8 @@ if (isset($result["data"]['topics'])) {
 <?php
 if (isset($topics)) {
     foreach ($topics as $topic) {
-
 ?>
+
         <div>
             <a href="index.php?ctrl=topic&action=infoTopic&id=<?= $topic->getId() ?>"><?= $topic->getTopicName() ?></a>
             <p><?= $topic->getCreationDate() ?></p>
@@ -21,6 +21,14 @@ if (isset($topics)) {
             <a><?= $topic->getCategory()->getCategoryName() ?></a>
         </div>
 
-<?php
-    }
-}
+<?php }} ?>
+
+        <form action="index.php?ctrl=forum&action=addTopic&id=<?= $category->getId() ?>" method="POST">
+            <label for="newTopic">Nouveau Topic</label>
+            <input trype="submit" name="submit" placeholder="Topic" required >
+
+			<label for="postName">Nouveau Post</label>
+			<textarea id="title" name="title" placeholder="Post" > </textarea>
+			<input type="submit" name="submit" value="Ajouter" />
+
+        </form>

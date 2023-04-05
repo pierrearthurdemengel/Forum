@@ -36,10 +36,9 @@ if (isset($result["data"]['posts'])) {
 
     <?php } ?>
 
-    <form>
-        <label for="text-input">Répondre avec un nouveau message :</label><br>
-        <input type="text" id="text-input" name="text-input"><br>
-        <button type="submit">Envoyer</button>
+    <form action='index.php?ctrl=forum&action=addPost&id=<?= $topic->getId() ?>' method='POST'>
+    <textarea id="text" name="content" placeholder="content" required rows="5" cols="33"> </textarea>
+    <input type="submit" name="submit" value="Ajouter"/>
     </form>
 
 </span>

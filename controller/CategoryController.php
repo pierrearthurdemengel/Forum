@@ -38,5 +38,17 @@ class CategoryController extends AbstractController implements ControllerInterfa
             ];
     }
 
+    public function addCategory(){
+
+        $CategoryManager = new CategoryManager();
+
+        if (isset($_POST['submit'])) {
+            $CategoryManager =  filter_input(INPUT_POST, "categoryName", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+
+            if($categoryName) {
+                $newCategory = $CategoryManager->add(["categoryName" => $categoryName]);
+                $this->redirectTo('forum', 'listCategory', $newCategory);
+        }
+    }
 
     }

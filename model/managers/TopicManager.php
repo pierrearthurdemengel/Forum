@@ -1,7 +1,7 @@
 <?php
 
 namespace Model\Managers;
-
+use App\AbstractController;
 use App\Manager;
 use App\DAO;
 
@@ -19,9 +19,10 @@ class TopicManager extends Manager
 
     public function findTopicByCategory($id)
     {
-        $sql = "SELECT *
-            FROM " . $this->tableName . " t
-            WHERE t.category_id = :id";
+        $sql="SELECT *
+            FROM ".$this->tableName."
+            WHERE category_id = :id
+            ORDER BY creationDate DESC";
 
         //  var_dump($sql);die;
 
@@ -32,37 +33,20 @@ class TopicManager extends Manager
         );
     }
 
-    public function addPost($text)
+    public function addTopic($id)
     {
-            $sql = "INSERT INTO " . $this->tableName . " (text)
-            VALUES (:text)";
+        $TopicManager = new TopicManager();
+        $PostManager = new PostManager();
 
-        //  var_dump($sql);die;
+            if(isset($_POST['submit'])){
+                $topicName = filter_input(INPUT_POST, "topicName", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
-        $params = array(
+            if($topicName){
+                $newTopic = $ $TopicManager->add(["topicName" => $topicName]);
+                $PostManager->add(["text"]);
+                $this->redirecTo("forum", 'postSelectbyTopic', $newTopic);
+            }
 
-            'text' => $text,
-
-        );
-
-        DAO::insert($sql, $params);
-
-        // //Exemple d'insertion de données dans une table nommée 'ma_table'
-        // $sql = "INSERT INTO post (text-input) VALUES (:text)";
-
-        // //les valeurs à insérer
-        // $valeurs = array(
-        //     'text-input' => 'text'
-        // );
-
-        // //on exécute la requête
-        // $resultat = Post::insert($sql, $valeurs);
-
-        // //vérification du succès de l'opération
-        // if ($resultat !== false) {
-        //     echo "L'insertion a réussi, l'id de l'enregistrement ajouté est : " . $resultat;
-        // } else {
-        //     echo "L'insertion a échoué.";
-        // }
+            }
     }
 }

@@ -37,4 +37,14 @@ class CategoryController extends AbstractController implements ControllerInterfa
                 ]
             ];
         }
+        
+    public function addNewPost($id){
+        $PostManager = new PostManager();
+        
+            if(isset($_POST['submit'])) {
+                $text = filter_input()
+            }
+        
     }
+        
+}
