@@ -1,20 +1,15 @@
 <?php
-$category = $result['data']['category'];
+$categorys = $result['data']['categorys'];
 // var_dump($categorys); die;
 $topics = $result['data']['topics'];
 
 // récupère les données envoyées par le contrôleur à travers la variable $result et la clé data, qui contient un tableau associatif de données. La clé 'categorys' est extraite de ce tableau à travers $result["data"]['categorys'] et assignée à une variable $categorys.
-if (isset($result["data"]['category'])) {
-    $topics = $result["data"]['topics'];
-    $category = $result["data"]['category'];
-
-}
 
 // Ensuite, le code affiche un titre <h1> "liste topics" et 
 // utilise une boucle foreach pour parcourir chaque élément de la variable $topics. À chaque itération, le titre du sujet est récupéré à l'aide de la méthode getTitle() et affiché dans un paragraphe HTML <p>.
 ?>
 
-<h1>Liste des topics de la catégorie : <?= isset($category) ? $category->getCategoryName() : "" ?></h1>
+<h1>Liste des topics de la catégorie : <?= isset($category) ? $category : "" ?></h1>
 
 <?php
 if (isset($topics)) {
