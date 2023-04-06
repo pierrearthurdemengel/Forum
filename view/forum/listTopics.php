@@ -1,16 +1,19 @@
 <?php
-// récupère les données envoyées par le contrôleur à travers la variable $result et la clé data, qui contient un tableau associatif de données. La clé 'topics' est extraite de ce tableau à travers $result["data"]['topics'] et assignée à une variable $topics.
-if (isset($result["data"]['topics'])) {
+$categoryActuel = null;
+$topics = $result['data']['topics'];
+
+// récupère les données envoyées par le contrôleur à travers la variable $result et la clé data, qui contient un tableau associatif de données. La clé 'categorys' est extraite de ce tableau à travers $result["data"]['categorys'] et assignée à une variable $categorys.
+if (isset($result["data"]['categorys'])) {
     $topics = $result["data"]['topics'];
-    $categorys = $result["data"]['category'];
-    var_dump("test");die;
+    $categorys = $result["data"]['categorys'];
+    $categoryActuel = $categorys;
 }
 
 // Ensuite, le code affiche un titre <h1> "liste topics" et 
 // utilise une boucle foreach pour parcourir chaque élément de la variable $topics. À chaque itération, le titre du sujet est récupéré à l'aide de la méthode getTitle() et affiché dans un paragraphe HTML <p>.
 ?>
 
-<h1>liste topics de la catégorie : <?= $categorys->getCategoryName() ?></h1>
+<h1>Liste des topics de la catégorie : <?= isset($categoryActuel) ? $categoryActuel->getCategoryName() : "" ?></h1>
 
 <?php
 if (isset($topics)) {
@@ -26,9 +29,9 @@ if (isset($topics)) {
 
 <?php }} ?>
 
-        <form action="index.php?ctrl=forum&action=addTopic&id=<?= $categorys->getId() ?>" method="POST">
+        <form action="index.php?ctrl=forum&action=addTopic&id=<?= isset($categorys) ? $categorys->getId() : "" ?>" method="POST">
             <label for="newTopic">Nouveau Topic</label>
-            <input trype="submit" name="submit" placeholder="Topic" required >
+            <input type="submit" name="submit" placeholder="Topic" required >
 
 			<label for="postName">Nouveau Post</label>
 			<textarea id="title" name="title" placeholder="Post" > </textarea>

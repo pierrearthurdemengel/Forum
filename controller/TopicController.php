@@ -16,16 +16,18 @@ class TopicController extends AbstractController implements ControllerInterface
     public function index()
     {
 
-
         $topicManager = new TopicManager();
+        $categoryManager = new CategoryManager();
+
         return [
             "view" => VIEW_DIR . "forum/listTopics.php",
             "data" => [
-                "topics" => $topicManager->findAll(["creationDate", "DESC"])
-                // la méthode "findAll" est une méthode générique qui provient de l'AbstractController (dont hérite chaque controller de l'application)
+                "category" => $categoryManager->findAll(["categoryName", "DESC"]),
+                "topics" => $topicManager->listTopics()
             ]
         ];
     }
+
 
     public function infoTopic($id)
     {
@@ -42,28 +44,48 @@ class TopicController extends AbstractController implements ControllerInterface
             ];
     }
 
-    public function listTopicByCategory($id)
+    public function listTopicsByCategory($id)
     {
-        $categoryManager = new CategoryManager();
-        $category = $categoryManager->findOneById($id);
         $topicManager = new TopicManager();
+        $categoryManager = new CategoryManager();
 
-        if(isset($_SESSION['user'])) {
-            $topics = $topicManager->listTopicByCategory($id);
-        } else {
-            $topics = null;
-        }
+        if(isset($_POST['categorys'])) 
+        {
+            $categorySelected = filter_input(INPUT_POST, 'categorys', FILTER_SANITIZE_NUMBER_INT);
+        
 
         return
             [
                 "view" => VIEW_DIR . "forum/listTopics.php",
                 "data" => 
                 [
-                    "topics" => $topicManager->findTopicByCategory($id),
-                    "category" => $category
+                    "categorys" => $categoryManager->findAll(["categoryName", "DESC"]),
+                    "topics" => $topicManager->listTopicsByCategory($categorySelected),
+                    "categorySelected" => $categorySelected
                 ]
             ];
-    }
+        }
+        else {
+                $categorySelected = null;
+            }
+         
+            
+        if($id) {
+            return [
+                "view" => VIEW_DIR. "forum/listTopics.php",
+                "data" => 
+                [
+                    "categorys" => $categoryManager->findAll(["categoryName", "DESC"]),
+                    "topics" => $topicManager->listTopicsByCategory($id)
+                ]
+                ];
+            }
+
+        else {
+            $this->rediretTo("topic");
+        }
+    
+
 
     // public function addTopic($id){ //à finir
     //     $PostManager = new PostManager();
@@ -72,4 +94,7 @@ class TopicController extends AbstractController implements ControllerInterface
     //         $text = 
     //     }
     // }
+    }
+
+    
 }

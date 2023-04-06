@@ -31,9 +31,9 @@ CREATE TABLE IF NOT EXISTS `category` (
 
 -- Listage des données de la table forum_pierre-arthur.category : ~3 rows (environ)
 INSERT INTO `category` (`id_category`, `categoryName`, `dateCreation`, `user_id`) VALUES
-	(1, 'test', '2023-04-04 09:20:14', 1),
-	(2, 'les fleurs des champs', '2023-04-04 10:37:19', 1),
-	(3, 'les plantes commestibles', '2023-04-04 10:37:36', 1);
+	(1, 'category_test', '2023-04-04 09:20:14', 1),
+	(2, 'category_les fleurs des champs', '2023-04-04 10:37:19', 1),
+	(3, 'category_les plantes commestibles', '2023-04-04 10:37:36', 1);
 
 -- Listage de la structure de table forum_pierre-arthur. post
 CREATE TABLE IF NOT EXISTS `post` (
@@ -50,10 +50,10 @@ CREATE TABLE IF NOT EXISTS `post` (
 
 -- Listage des données de la table forum_pierre-arthur.post : ~4 rows (environ)
 INSERT INTO `post` (`id_post`, `title`, `text`, `datePost`, `user_id`, `topic_id`) VALUES
-	(1, 'Les pissenlits', 'Les pissenlit sont commestibles lorscequ\'ils sont en fleurs des racines à la fleure', '2023-04-04 13:45:45', 1, 3),
-	(2, 'Les coquelicots', 'Ils ne poussent que dans les champs biologiques', '2023-04-04 13:48:26', 1, 2),
-	(3, 'titreTest', 'TextTest', '2023-04-04 13:48:53', 1, 1),
-	(4, 'les pissenlits', 'Moi, mon cousin est mort après avoir manger des pissenlits', '2023-04-04 14:10:56', 2, 5);
+	(1, 'Titre post Les pissenlits', 'text Les pissenlit sont commestibles lorscequ\'ils sont en fleurs des racines à la fleure', '2023-04-04 13:45:45', 1, 3),
+	(2, 'Titre post Les coquelicots', 'text Ils ne poussent que dans les champs biologiques', '2023-04-04 13:48:26', 1, 2),
+	(3, 'Titre post Test', 'Text Test', '2023-04-04 13:48:53', 1, 1),
+	(4, 'Titre post les pissenlits', 'text Moi, mon cousin est mort après avoir manger des pissenlits', '2023-04-04 14:10:56', 2, 5);
 
 -- Listage de la structure de table forum_pierre-arthur. topic
 CREATE TABLE IF NOT EXISTS `topic` (
@@ -70,12 +70,12 @@ CREATE TABLE IF NOT EXISTS `topic` (
 
 -- Listage des données de la table forum_pierre-arthur.topic : ~6 rows (environ)
 INSERT INTO `topic` (`id_topic`, `topicName`, `creationDate`, `locked`, `user_id`, `category_id`) VALUES
-	(1, '1st', '2023-04-04 09:20:30', 0, 1, 1),
-	(2, '2nd', '2023-04-04 09:49:09', 0, 2, 1),
-	(3, '3rd', '2023-04-04 09:49:27', 0, 3, 2),
-	(4, '4th', '2023-04-04 13:40:48', 0, 1, 3),
-	(5, 'les pissenlits', '2023-04-04 13:46:33', 0, 1, 3),
-	(6, 'les coquelicots', '2023-04-04 13:47:51', 0, 1, 2);
+	(1, '1st topic', '2023-04-04 09:20:30', 0, 1, 1),
+	(2, '2nd topic', '2023-04-04 09:49:09', 0, 2, 1),
+	(3, '3rd topic', '2023-04-04 09:49:27', 0, 3, 2),
+	(4, '4th topic', '2023-04-04 13:40:48', 0, 1, 3),
+	(5, 'les pissenlits topic', '2023-04-04 13:46:33', 0, 1, 3),
+	(6, 'les coquelicots topic', '2023-04-04 13:47:51', 0, 1, 2);
 
 -- Listage de la structure de table forum_pierre-arthur. user
 CREATE TABLE IF NOT EXISTS `user` (
