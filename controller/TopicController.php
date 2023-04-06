@@ -37,7 +37,7 @@ class TopicController extends AbstractController implements ControllerInterface
         return
             [
                 "view" => VIEW_DIR . "forum/infoTopic.php", //choisis la vue
-                "data" => [         //crée le(s) tableau(x) avec la data dont j'ai beosin dans 
+                "data" => [         //crée le(s) tableau(x) avec la data dont j'ai beosin
                     "topic" => $topicManager->findOneById($id),
                     "posts" => $postManager->findPostByTopic($id)
                 ]
@@ -48,10 +48,8 @@ class TopicController extends AbstractController implements ControllerInterface
     {
         $topicManager = new TopicManager();
         $categoryManager = new CategoryManager();
-
-        if(isset($_POST['categorys'])) 
-        {
-            $categorySelected = filter_input(INPUT_POST, 'categorys', FILTER_SANITIZE_NUMBER_INT);
+        $category = $categoryManager->findOneById($id);
+        $topics = $topicManager->findAllTopics(["creationDate", "DESC"], $id);
         
 
         return
@@ -59,27 +57,24 @@ class TopicController extends AbstractController implements ControllerInterface
                 "view" => VIEW_DIR . "forum/listTopics.php",
                 "data" => 
                 [
-                    "categorys" => $categoryManager->findAll(["categoryName", "DESC"]),
-                    "topics" => $topicManager->listTopicsByCategory($categorySelected),
-                    "categorySelected" => $categorySelected
+                    "topics" => $topics,
+                    "category" => $category
                 ]
             ];
         }
-        else {
-                $categorySelected = null;
-            }
+
          
             
-        if($id) {
-            return [
-                "view" => VIEW_DIR. "forum/listTopics.php",
-                "data" => 
-                [
-                    "categorys" => $categoryManager->findAll(["categoryName", "DESC"]),
-                    "topics" => $topicManager->listTopicsByCategory($id)
-                ]
-                ];
-            }
+        // if($id) {
+        //     return [
+        //         "view" => VIEW_DIR. "forum/listTopics.php",
+        //         "data" => 
+        //         [
+        //             "categorys" => $categoryManager->findAll(["categoryName", "DESC"]),
+        //             "topics" => $topicManager->listTopicsByCategory($id)
+        //         ]
+        //         ];
+        //     }
 
    
 
@@ -94,4 +89,3 @@ class TopicController extends AbstractController implements ControllerInterface
     }
 
     
-}

@@ -36,26 +36,26 @@ class TopicManager extends Manager
         );
     }
 
-    public function listTopicsByCategory($id){
-        parent::connect();
+    // public function listTopicsByCategory($id){
+    //     parent::connect();
 
-        $sql = "SELECT *,
-        (SELECT MAX(p.datePost) 
-          FROM post p 
-          WHERE t.id_topic = p.topic_id) AS dernierMessage,
-        (SELECT COUNT(*) 
-          FROM post p 
-          WHERE t.id_topic = p.topic_id) AS nombreMessage
-        FROM ".$this->tableName." t
-        WHERE t.category_id = :id
-        ORDER BY t.creationDate
-    ";
+    //     $sql = "SELECT *,
+    //     (SELECT MAX(p.datePost) 
+    //       FROM post p 
+    //       WHERE t.id_topic = p.topic_id) AS dernierMessage,
+    //     (SELECT COUNT(*) 
+    //       FROM post p 
+    //       WHERE t.id_topic = p.topic_id) AS nombreMessage
+    //     FROM ".$this->tableName." t
+    //     WHERE t.category_id = :id
+    //     ORDER BY t.creationDate
+    // ";
 
-    return $this->getMultipleResults(
-        DAO::select($sql, ['id' => $id], true),
-        $this->className
-    );
-    }
+    // return $this->getMultipleResults(
+    //     DAO::select($sql, ['id' => $id], true),
+    //     $this->className
+    // );
+    // }
 
     public function findTopicByCategory($id)
     {
@@ -69,6 +69,25 @@ class TopicManager extends Manager
         return $this->getMultipleResults(
             // ou getOneOrNullResult si un seul objet
             DAO::select($sql, ['id' => $id], TRUE),
+            $this->className
+        );
+    }
+
+    public function findAllTopics(array $order = null, int $id)
+    {
+        $orderQuery = ($order) ?
+        "ORDER BY ".$order[0]. " " .$order[1] :
+        "";
+
+        $sql = "SELECT id_topic, topicName, creationDate, locked, t.user_id, COUNT(p.topic_id) AS nbPosts
+            FROM " . $this->tableName. " t
+            LEFT JOIN post p ON t.id_topic = p.topic_id
+            WHERE t.category_id = :id
+            GROUP BY t.id_topic "
+            . $orderQuery;
+
+        return $this->getMultipleResults(
+            DAO::select($sql, ["id" => $id]),
             $this->className
         );
     }

@@ -3,9 +3,11 @@
 namespace Controller;
 
 use App\Session;
+use App\DAO;
 use App\AbstractController;
 use App\ControllerInterface;
 use Model\Managers\CategoryManager;
+use Model\Managers\TopicManager;
 
 class CategoryController extends AbstractController implements ControllerInterface
 {
@@ -18,27 +20,45 @@ class CategoryController extends AbstractController implements ControllerInterfa
             "view" => VIEW_DIR . "forum/listCategorys.php",
             "data" => [
                 "categorys" => $categoryManager->findAll(["categoryName", "DESC"])
-                // la méthode "findAll" est une méthode générique qui provient de l'AbstractController (dont hérite chaque controller de l'application)
+            ]
+        ];
+    }
+
+    public function listTopicsByCategory($id)
+    {
+        $topicManager = new TopicManager();
+        $categoryManager = new CategoryManager();
+        $category = $categoryManager->findOneById($id);
+        $topics = $topicManager->findAllTopics(["creationDate", "DESC"], $id);
+
+        return [
+            "view" => VIEW_DIR . "forum/listTopics.php",
+            "data" =>
+            [
+                "topics" => $topics,
+                "category" => $category
             ]
         ];
     }
 
 
-    public function addCategory()
-    {
 
-        $CategoryManager = new CategoryManager();
 
-        if (isset($_POST['submit'])) {
+    // public function addCategory()
+    // {
 
-            $categoryName =  filter_input(INPUT_POST, "categoryName", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+    //     $CategoryManager = new CategoryManager();
 
-            if ($categoryName) {
+    //     if (isset($_POST['submit'])) {
 
-                $CategoryManager->add(["categoryName" => $categoryName]);
+    //         $categoryName =  filter_input(INPUT_POST, "categoryName", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
-                $this->redirectTo('category');
-            }
-        }
-    }
+    //         if ($categoryName) {
+
+    //             $CategoryManager->add(["categoryName" => $categoryName]);
+
+    //             $this->redirectTo('category');
+    //         }
+        // }
+    // }
 }

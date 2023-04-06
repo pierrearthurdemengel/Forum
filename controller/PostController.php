@@ -65,8 +65,6 @@ class CategoryController extends AbstractController implements ControllerInterfa
                     $PostManager->add(["text" => $text]);
                     $this->redirectTo('forum', 'postByTopic', $id);
                 }
-            }
-        
+            }   
     }
-        
 }
