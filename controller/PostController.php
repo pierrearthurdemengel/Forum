@@ -31,40 +31,27 @@ class CategoryController extends AbstractController implements ControllerInterfa
         $topicManager = new TopicManager();
         $postManager = new PostManager();
 
-        return 
-            [
-                "view" => VIEW_DIR."forum/listPosts.php",
-                "data" => 
-                [
-                    "topic" => $topicManager->findOneById($id),
-                    "posts" => $postManager->listPostByTopic($id),
-                ]
-            ];
-    }
-    else 
-    {
-        return 
-        [
-            "view" => VIEW_DIR."forum/listTopics.php",
-            "data" => 
-            [
-                "topics" => $topicManager->findAll(["topicName", "DESC"]),
-                "posts" => $postManager->findAll(["text", "DESC"]),
+        $data = [
+            "view" => VIEW_DIR."forum/listPosts.php",
+            "data" => [
+                "topic" => $topicManager->findOneById($id),
+                "posts" => $postManager->findPostByTopic($id),
             ]
         ];
-    }
 
+        return $data;
+    }
         
     public function addPost($id){
-        $PostManager = new PostManager();
+        $postManager = new PostManager();
         
-            if(isset($_POST['submit'])) {
-                $text = filter_input(INPUT_POST, "text", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+        if(isset($_POST['submit'])) {
+            $text = filter_input(INPUT_POST, "text", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
-                if($text) {
-                    $PostManager->add(["text" => $text]);
-                    $this->redirectTo('forum', 'postByTopic', $id);
-                }
-            }   
+            if($text) {
+                $postManager->add(["text" => $text, "topic_id" => $id]);
+                $this->redirectTo('forum', 'listPostByTopic', $id);
+            }
+        }   
     }
 }
