@@ -6,6 +6,7 @@ namespace Model\Managers;
 use App\Manager;
 use App\DAO;
 use App\AbstractController;
+use App\PostController;
 
 class PostManager extends Manager{
 
@@ -33,5 +34,14 @@ class PostManager extends Manager{
             DAO::select($sql, ['id' => $id], TRUE),
             $this->className
         );
+    }
+
+    public function addPost($id,$text){
+        parent::connect();
+
+            $sql = "INSERT ".$this->tableName."
+                    WHERE id_message = :id";
+
+                DAO::update($sql, ['id' => $id,'text' => $text]);
     }
 }

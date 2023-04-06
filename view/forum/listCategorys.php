@@ -19,8 +19,16 @@ if (isset($categorys)) {
         </div>
 <?php }}
 ?>
-<form action="index.php?ctrl=forum&action=addCategory" method="POST">
-    <label for="newCategory"> Nouvelle Catégorie
-        <input type="text" name="categoryName" placeholder="Category" required>
-    </label>
+
+
+    <!-- formulaire topic + 1er message du nouveau sujet -->
+    <form action="index.php?ctrl=category&action=addCategory" class="reply" method="post">
+            <div>
+                <label for="nomCategorie">Ajouter une catégorie:</label> 
+                <input name="addCategory" required>
+            </div>
+            <div>
+                <input type="submit" name="submit" value="Ajouter">
+            </div>
+        </form>
 </form>

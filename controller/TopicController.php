@@ -63,7 +63,34 @@ class TopicController extends AbstractController implements ControllerInterface
             ];
         }
 
-         
+        public function addTopic($id){
+            $topicManager = new TopicManager();
+            $postManager = new PostManager();
+
+            if(isset($_POST['submit'])) {
+                $topicName = filter_input(INPUT_POST, "topicName", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+                $text = filter_input(INPUT_POST, "text", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+
+                if($topicManager) {
+                    $idLastTopic = $topicManager->add(["topicName" => $topicName, "category_id" => $id]);
+                    $postManager->add(["topic_id" => $idLastTopic, "text" => $text]);
+                    $this->redirectTo("topic", $idLastTopic);
+                }
+            }
+        }
+
+        public function addPost($id){
+            $postManager = new PostManager();
+            
+            if(isset($_POST['submit'])) {
+                $text = filter_input(INPUT_POST, "text", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+    
+                if($text) {
+                    $postManager->add(["text" => $text, "topic_id" => $id]);
+                    $this->redirectTo('forum', 'listPostByTopic', $id);
+                }
+            }   
+        }
             
         // if($id) {
         //     return [

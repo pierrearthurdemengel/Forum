@@ -1,5 +1,5 @@
 <?php
-// var_dump($categorys); die;
+
 $topics = (!$result['data']['topics']) ? [] : $result['data']['topics'];
 $category = $result['data']['category'];
 
@@ -23,12 +23,16 @@ $category = $result['data']['category'];
 
 <?php } ?>
 
-        <form action="index.php?ctrl=forum&action=addTopic&id=<?= isset($category) ? $category->getId() : "" ?>" method="POST">
-            <label for="newTopic">Nouveau Topic</label>
-            <input type="submit" name="submit" placeholder="Topic" required >
-
-			<label for="postName">Nouveau Post</label>
-			<textarea id="title" name="title" placeholder="Post" > </textarea>
-			<input type="submit" name="submit" value="Ajouter" />
-
-        </form>
+        <form action="index.php?ctrl=topic&action=addTopic&id=<?= $categorieActuel ?>" class="reply" method="post">
+        <div>
+            <label for="addTopic">Titre: </label>
+            <input type="text" name="addTopic">
+        </div>
+        <div>
+            <label for="text">Message: </label>
+            <textarea name="text" rows= "3"></textarea>
+        </div>
+        <div>
+            <input type="submit" name="submit">
+        </div>
+    </form>

@@ -91,4 +91,13 @@ class TopicManager extends Manager
             $this->className
         );
     }
+
+    public function addTopic($id){
+        parent::connect();
+
+            $sql = "INSERT FROM ".$this->tableName."
+                    WHERE id_topic = :id
+                    ";
+                DAO::delete($sql, ['id' => $id]);
+    }
 }

@@ -29,7 +29,14 @@ if (isset($posts)) {
 
 <p>Ajouter un nouveau Post"<?=$topic->getTitle()?>"</p>
 
-<form action="index.php?ctrl=forum&action=addPost&id=<?= $topic->getId() ?>" method="POST">
-<textarea id="text" name="text" placeholder="text" required rows="5" cols="33"> </textarea>
-    <input type="submit" name="submit" value="Ajouter"/>
-</form>
+
+
+<form action="index.php?ctrl=forum&action=addPost&id=<?= $topic->getId() ?>" class="reply" method="POST">
+            <div>
+                <label for="text">Répondre :</label> 
+                <textarea name="text"></textarea>
+            </div>
+            <div>
+                <input type="submit" name="submit">
+            </div>
+        </form>
