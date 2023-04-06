@@ -81,10 +81,7 @@ class TopicController extends AbstractController implements ControllerInterface
                 ];
             }
 
-        else {
-            $this->rediretTo("topic");
-        }
-    
+   
 
 
     // public function addTopic($id){ //à finir
