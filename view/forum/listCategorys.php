@@ -32,4 +32,3 @@ if (isset($categorys)) {
                 <input type="submit" name="submit" value="Ajouter">
             </div>
         </form>
-</form>
