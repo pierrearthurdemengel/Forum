@@ -1,3 +1,4 @@
+
 <a href="index.php?ctrl=topic&action=infoTopic&id=<?= $post->getId() ?>"><?= $post->getTopicName() ?></a>
 <?php
 // récupère les données envoyées par le contrôleur à travers la variable $result et la clé data, qui contient un tableau associatif de données. La clé 'posts' est extraite de ce tableau à travers $result["data"]['posts'] et assignée à une variable $posts.

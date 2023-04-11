@@ -19,7 +19,7 @@
             <header>
                 <nav>
                     <div id="nav-left">
-                        <a href="index.php?ctrl=index">Accueil</a>
+                        <li class="actve"><a href="index.php?ctrl=index">Accueil</a></li>
                         <?php
                         if(App\Session::isAdmin()){
                             ?>
@@ -45,14 +45,20 @@
                         }
                         else{
                             ?>
-                            <a href="./view/security/login.php">Connexion</a>
-                            <a href="/security/register.html">Inscription</a>
-                            <a href="index.php?ctrl=category&action=listCategorys">liste des categories</a>
+                    <nav class="navbar">
+                        <a href="#" class="logo">Forum</a>
+                        <div class="nav-links"> 
+
+                            <ul>
+                                <li><a href="./view/security/login.php">Connexion</a></li>
+                                <li><a href="/security/register.html">Inscription</a></li>
+                                <li><a href="index.php?ctrl=category&action=listCategorys">liste des categories</a></li>
+                            </ul>
+                        </div>  
+                    </nav>
 
                             <?php
                         }
-                   
-                        
                     ?>
                     </div>
                 </nav>

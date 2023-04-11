@@ -1,3 +1,4 @@
+
 <?php
 
 $topics = (!$result['data']['topics']) ? [] : $result['data']['topics'];

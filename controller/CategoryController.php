@@ -46,8 +46,9 @@ class CategoryController extends AbstractController implements ControllerInterfa
         $categoryManager = new CategoryManager();
 
         if(isset($_POST['submit'])){
-            $categoryName = filter_input(INPUT_POST, "categoryName", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-
+            $categoryName = filter_input(INPUT_POST, "addCategory", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+            
+            // echo "test";die; ne recupère pas $categoryName
             if($categoryName){
                 $categoryManager->add(["categoryName" => $categoryName]);
 
