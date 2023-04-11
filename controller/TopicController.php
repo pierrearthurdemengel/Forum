@@ -29,14 +29,14 @@ class TopicController extends AbstractController implements ControllerInterface
     }
 
 
-    public function infoTopic($id)
+    public function listPosts($id)
     {
         $topicManager = new TopicManager();
         $postManager = new PostManager();
 
         return
             [
-                "view" => VIEW_DIR . "forum/infoTopic.php", //choisis la vue
+                "view" => VIEW_DIR . "forum/listPosts.php", //choisis la vue
                 "data" => [         //crée le(s) tableau(x) avec la data dont j'ai beosin
                     "topic" => $topicManager->findOneById($id),
                     "posts" => $postManager->findPostByTopic($id)
@@ -66,28 +66,34 @@ class TopicController extends AbstractController implements ControllerInterface
         public function addTopic($id){
             $topicManager = new TopicManager();
             $postManager = new PostManager();
-
+            
             if(isset($_POST['submit'])) {
-                $topicName = filter_input(INPUT_POST, "topicName", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-                $text = filter_input(INPUT_POST, "text", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-
-                if($topicManager) {
-                    $idLastTopic = $topicManager->add(["topicName" => $topicName, "category_id" => $id]);
-                    $postManager->add(["topic_id" => $idLastTopic, "text" => $text]);
-                    $this->redirectTo("topic", $idLastTopic);
+                $topicName = filter_input(INPUT_POST, "addTopic", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+                $user_id = 1;
+                $text = filter_input(INPUT_POST, "addPost", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+                
+                if($topicName) {
+                    $idLastTopic = $topicManager->add(["topicName" => $topicName, "category_id" => $id, "user_id" => $user_id]);
+                    // echo $id; die;
+                    $postManager->add(["text" => $text, "topic_id" => $idLastTopic, "user_id" => $user_id]);
+                    
+                    $this->redirectTo("topic", "listTopicsByCategory", $id);
                 }
             }
         }
 
         public function addPost($id){
             $postManager = new PostManager();
+    
             
+            echo "test"; die;
             if(isset($_POST['submit'])) {
                 $text = filter_input(INPUT_POST, "text", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+                $user_id = 1;
     
                 if($text) {
                     $postManager->add(["text" => $text, "topic_id" => $id]);
-                    $this->redirectTo('forum', 'listPostByTopic', $id);
+                    $this->redirectTo('forum', 'listPosts', $id);
                 }
             }   
         }

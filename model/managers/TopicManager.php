@@ -5,8 +5,7 @@ namespace Model\Managers;
 use App\Manager;
 use App\DAO;
 
-class TopicManager extends Manager
-{
+class TopicManager extends Manager{
 
     protected $className = "Model\Entities\Topic";
     protected $tableName = "topic";
@@ -76,11 +75,11 @@ class TopicManager extends Manager
     public function findAllTopics(array $order = null, int $id)
     {
         $orderQuery = ($order) ?
-        "ORDER BY ".$order[0]. " " .$order[1] :
-        "";
+            "ORDER BY " . $order[0] . " " . $order[1] :
+            "";
 
         $sql = "SELECT id_topic, topicName, creationDate, locked, t.user_id, COUNT(p.topic_id) AS nbPosts
-            FROM " . $this->tableName. " t
+            FROM " . $this->tableName . " t
             LEFT JOIN post p ON t.id_topic = p.topic_id
             WHERE t.category_id = :id
             GROUP BY t.id_topic "
@@ -92,12 +91,5 @@ class TopicManager extends Manager
         );
     }
 
-    public function addTopic($id){
-        parent::connect();
 
-            $sql = "INSERT FROM ".$this->tableName."
-                    WHERE id_topic = :id
-                    ";
-                DAO::delete($sql, ['id' => $id]);
-    }
 }

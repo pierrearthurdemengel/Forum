@@ -17,23 +17,24 @@ $category = $result['data']['category'];
 ?>
 
         <div><br>
-            <a href="index.php?ctrl=topic&action=infoTopic&id=<?= $topic->getId() ?>"><?= $topic->getTopicName() ?></a>
+            <a href="index.php?ctrl=topic&action=listPosts&id=<?= $topic->getId() ?>"><?= $topic->getTopicName() ?></a>
             <p><?= $topic->getCreationDate() ?></p>
             <a><?= $topic->getUser()->getPseudo() ?></a>
         </div>
 
 <?php } ?>
+    <!-- formulaire topic + 1er message du nouveau sujet -->
 
-        <form action="index.php?ctrl=topic&action=addTopic&id=<?= $categorieActuel ?>" class="reply" method="post">
+        <form action="index.php?ctrl=topic&action=addTopic&id=<?= $category->getId() ?>" class="reply" method="post">
         <div>
             <label for="addTopic">Titre: </label>
             <input type="text" name="addTopic">
         </div>
-        <div>
+    <!--    <div>
             <label for="text">Message: </label>
             <textarea name="text" rows= "3"></textarea>
-        </div>
+        </div> -->
         <div>
-            <input type="submit" name="submit">
+            <input type="submit" name="submit" value="Ajouter">
         </div>
     </form>

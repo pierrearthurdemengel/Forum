@@ -1,43 +1,47 @@
 
-<a href="index.php?ctrl=topic&action=infoTopic&id=<?= $post->getId() ?>"><?= $post->getTopicName() ?></a>
 <?php
-// récupère les données envoyées par le contrôleur à travers la variable $result et la clé data, qui contient un tableau associatif de données. La clé 'posts' est extraite de ce tableau à travers $result["data"]['posts'] et assignée à une variable $posts.
-$topic = $result["data"]["topic"];
-$posts = $result["data"]['posts'];
 
 
+if (isset($result["data"]['topic'])) {
+    $topic = $result["data"]['topic'];
+}
+// var_dump($result["data"]['posts']); die;
 if (isset($result["data"]['posts'])) {
     $posts = $result["data"]['posts'];
 }
 
 ?>
 
-<h1> Liste des postes de <?=$topic->getTitle()?> </h1>
-<?php
-if (isset($posts)) {
-    foreach ($posts as $post) {
-
-?>
-        <div>
-            <p><?= $post->getTitle() ?></p>
-            <p><?= $post->getText() ?></p>
-            <p><?= $post->getDatePost() ?></p>
-            <a><?= $post->getUser()->getPseudo() ?></a>
-            <a><?= $post->getTopic() ?></a>
-            <a><?= $post->getCategory()->getCategoryName() ?></a>
-        </div>
-<?php }} ?>
-
-<p>Ajouter un nouveau Post"<?=$topic->getTitle()?>"</p>
+<h1>Info Topic</h1>
 
 
+<div>
+    <a><?= $topic->getId() ?></a>
+    <a><?= $topic->getTopicName() ?></a>
+    <a><?= $topic->getCreationDate() ?></a>
+    <a><?= $topic->getClosed() ?></a>
+    <a><?= "créé par " . $topic->getUser()->getPseudo() ?></a>
+    <a><?= $topic->getCategory()->getCategoryName() ?></a>
+</div>
+<span>
+    <?php 
+    foreach ($posts as $post) 
+    { ?>
 
-<form action="index.php?ctrl=forum&action=addPost&id=<?= $topic->getId() ?>" class="reply" method="POST">
-            <div>
-                <label for="text">Répondre :</label> 
-                <textarea name="text"></textarea>
-            </div>
-            <div>
-                <input type="submit" name="submit">
-            </div>
-        </form>
+<a><?= $post->getId() ?></a>
+
+<a><?= $post->getTitle() ?></a> <!-- getTitle non récupéré !!!!! -->
+<a><?= $post->getText() ?></a>
+<a><?= $post->getDatePost() ?></a>
+<a><?= "créé par " . $post->getUser()->getPseudo() ?></a>
+<a><?= $topic->getTopicName() ?></a>
+
+
+    <?php } ?>
+
+    <form action='index.php?ctrl=post&action=addPost&id=<?= $topic->getId() ?>' method='POST'>
+    <textarea id="text" name="text" placeholder="text"> </textarea>
+    <input type="submit" name="submit" value="Ajouter"/>
+    </form>
+
+</span>

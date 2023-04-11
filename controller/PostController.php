@@ -43,14 +43,16 @@ class CategoryController extends AbstractController implements ControllerInterfa
     }
         
     public function addPost($id){
+
         $postManager = new PostManager();
-        
+
         if(isset($_POST['submit'])) {
             $text = filter_input(INPUT_POST, "text", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+            $user_id = 1;
 
             if($text) {
-                $postManager->add(["text" => $text, "topic_id" => $id]);
-                $this->redirectTo('forum', 'listPostByTopic', $id);
+                $postManager->add(["text" => $text, "topic_id" => $id, "user_id" => $user_id]);
+                $this->redirectTo('forum', 'listPosts', $id);
             }
         }   
     }

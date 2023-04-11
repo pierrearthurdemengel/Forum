@@ -32,23 +32,14 @@ class CategoryManager extends Manager{
         );
     }
 
-    public function addCategory($id, $categoryName){
-        $sql = "INSERT INTO categoryName 
-        VALUES :categoryName";
-
-        return $this-> getMultipleResults(
-            DAO::insert($sql, ['id' => $id], true),
-            $this->className
-        );
-    }
-
-
+    
+    
     public function listCategorys($id)
     {
         $sql = "SELECT *
         FROM " . $this->tableName;
 
-        // var_dump($sql);die;
+// var_dump($sql);die;
 
         return $this->getMultipleResults(
             // ou getOneOrNullResult si un seul objet
@@ -56,4 +47,6 @@ class CategoryManager extends Manager{
             $this -> className
         );
     }
+    
+
 }

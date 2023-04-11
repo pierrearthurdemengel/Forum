@@ -22,7 +22,7 @@ if (isset($categorys)) {
 ?>
 
 
-    <!-- formulaire topic + 1er message du nouveau sujet -->
+    <!-- formulaire category -->
     <form action="index.php?ctrl=category&action=addCategory" class="reply" method="post">
             <div>
                 <label for="nomCategorie">Ajouter une catégorie:</label> 

@@ -36,12 +36,5 @@ class PostManager extends Manager{
         );
     }
 
-    public function addPost($id,$text){
-        parent::connect();
 
-            $sql = "INSERT ".$this->tableName."
-                    WHERE id_message = :id";
-
-                DAO::update($sql, ['id' => $id,'text' => $text]);
-    }
 }
