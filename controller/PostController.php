@@ -3,13 +3,14 @@
 namespace Controller;
 
 use App\Session;
+use App\DAO;
 use App\AbstractController;
 use App\ControllerInterface;
 use Model\Managers\TopicManager;
 use Model\Managers\PostManager;
 use Model\Managers\CategoryManager;
 
-class CategoryController extends AbstractController implements ControllerInterface
+class PostController extends AbstractController implements ControllerInterface
 {
 
     public function index()
@@ -19,7 +20,7 @@ class CategoryController extends AbstractController implements ControllerInterfa
         return [
             "view" => VIEW_DIR . "forum/listTopics.php",
             "data" => [
-                "topics" => $topicManager->findAll(["creationDate", "DESC"])
+                "topic" => $topicManager->findAll(["creationDate", "DESC"]),
                 // la méthode "findAll" est une méthode générique qui provient de l'AbstractController (dont hérite chaque controller de l'application)
             ]
         ];
@@ -35,27 +36,25 @@ class CategoryController extends AbstractController implements ControllerInterfa
             "view" => VIEW_DIR."forum/listPosts.php",
             "data" => [
                 "topic" => $topicManager->findOneById($id),
-                "posts" => $postManager->findPostByTopic($id),
+                "post" => $postManager->findPostByTopic($id),
             ]
         ];
 
         return $data;
     }
         
-    public function addPost($id){
-
+    public function addPost($id)
+    {
         $postManager = new PostManager();
-
+        
         if(isset($_POST['submit'])) {
+            
             $text = filter_input(INPUT_POST, "text", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
             $user_id = 1;
-
             if($text) {
                 $postManager->add(["text" => $text, "topic_id" => $id, "user_id" => $user_id]);
-                $this->redirectTo('forum', 'listPosts', $id);
+                $this->redirectTo('topic', 'listPosts', $id);
             }
-        }   
+        }
     }
-
-
 }

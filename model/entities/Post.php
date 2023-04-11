@@ -5,7 +5,6 @@
 
 final class Post extends Entity{
     private $id;
-    private $title;
     private $text;
     private $datePost;
     private $user;
@@ -35,25 +34,7 @@ final class Post extends Entity{
                 return $this;
         }
 
-                /**
-         * Get the value of title
-         */ 
-        public function getTitle()
-        {
-                return $this->title;
-        }
 
-        /**
-         * Set the value of title
-         *
-         * @return  self
-         */ 
-        public function setTitle($title)
-        {
-                $this->title = $title;
-
-                return $this;
-        }
 
                         /**
          * Get the value of text
