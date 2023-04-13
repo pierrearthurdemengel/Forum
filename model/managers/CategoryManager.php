@@ -47,6 +47,16 @@ class CategoryManager extends Manager{
             $this -> className
         );
     }
+
+    // public function delCategory($id)
+    // {
+    //     $sql = "SELECT * FROM category WHERE id = :id;"
+
+    //     return $this->getOneById(
+    //         DAO::delete($sql, ['id' => $id], true),
+    //         $this -> className
+    //     );
+    // }
     
 
 }

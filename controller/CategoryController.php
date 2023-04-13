@@ -57,24 +57,21 @@ class CategoryController extends AbstractController implements ControllerInterfa
         }
     }
 
+    public function delCategory(){
+
+        $categoryManager = new CategoryManager();
+
+        if(isset($_POST['submit'])) {
+
+            $id_category = filter_input(INPUT_POST, "delCategory", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+
+            if($id_category){
+                $categoryManager->delete(["id_category" => $id_category]);
+
+                $this->redirectTo('category');
+            }
+        }
+    }
 
 
-
-    // public function addCategory()
-    // {
-
-    //     $CategoryManager = new CategoryManager();
-
-    //     if (isset($_POST['submit'])) {
-
-    //         $categoryName =  filter_input(INPUT_POST, "categoryName", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-
-    //         if ($categoryName) {
-
-    //             $CategoryManager->add(["categoryName" => $categoryName]);
-
-    //             $this->redirectTo('category');
-    //         }
-        // }
-    // }
 }

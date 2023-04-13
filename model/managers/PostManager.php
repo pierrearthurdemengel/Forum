@@ -8,26 +8,28 @@ use App\DAO;
 use App\AbstractController;
 use App\PostController;
 
-class PostManager extends Manager{
+class PostManager extends Manager
+{
 
     protected $className = "Model\Entities\Post";
     protected $tableName = "post";
 
 
-    public function __construct(){
+    public function __construct()
+    {
+
         parent::connect();
     }
 
 
 
-// sortir la suite de postes par topic
+    // sortir la suite de postes par topic
     public function findPostByTopic($id)
     {
         $sql = "SELECT *
-            FROM ". $this->tableName." p
+            FROM " . $this->tableName . " p
             WHERE p.topic_id = :id";
 
-        //   var_dump($sql);die;
 
         return $this->getMultipleResults(
             // ou getOneOrNullResult si un seul objet
@@ -35,6 +37,18 @@ class PostManager extends Manager{
             $this->className
         );
     }
-  
 
+    public function delPost($id)
+    {
+        $sql = "DELETE
+                FROM " . $this->tableName . " p
+                WHERE p.id_post = :id";
+
+
+        return $this->getMultipleResults(
+            // ou getOneOrNullResult si un seul objet
+            DAO::delete($sql, ['id' => $id]),
+            $this->className
+        );
+    }
 }

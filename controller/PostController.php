@@ -57,4 +57,19 @@ class PostController extends AbstractController implements ControllerInterface
             }
         }
     }
+
+    public function delPost($id)
+    {
+        
+        $postManager = new PostManager();
+        
+        if(isset($_POST['submit'])) {
+            $id_post = filter_input(INPUT_POST, "delPost", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+            $user_id = 1;
+            if($id_post) {
+                $postManager-> delPost($id_post);
+                $this->redirectTo('topic', 'listPosts', $id);
+            }
+        }
+    }
 }

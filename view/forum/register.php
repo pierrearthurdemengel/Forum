@@ -17,8 +17,13 @@
             echo "Vous êtes connecté en tant que : " . $_SESSION['email'];
         }
         else{?>
-            <form action='index.php?ctrl=security&action=login&id=<?= $userId -> userId() ?>' class="reply" method='post'>           
-
+            <form action='index.php?ctrl=security&action=register&id=<?= $userId -> userId() ?>' class="reply" method='post'>           
+                    <div><a>
+            
+                        <label for="pseudo">Pseudo</label> 
+                        <input name="pseudo" required>
+                    </a>
+                    </div>
                     <div><a>
             
                         <label for="email">Email</label> 
@@ -31,14 +36,7 @@
                         <input name="pass" required>
                     </a>
                     </div>
-                    <div><a>
-            
-                    </a>
-                        <input class="input-checkbox" id="ckb1" type="checkbox" name="remember-me">
-                        <label class="label-checkbox" for="ckb1">
-                            Remeber me
-                        </label>
-                    </div>
+
                     <div>
                         <input type="submit" name="submit" value="Ajouter">
                     </div>

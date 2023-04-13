@@ -29,6 +29,22 @@ class SecurityController extends AbstractController implements ControllerInterfa
         ];
     }
 
+    public function addUser(){
+        $newUser = new UserManager();
+
+        if(isset($_POST['submit'])) {
+            $pseudo = filter_input(INPUT_POST, "pseudo", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+            $email = filter_input(INPUT_POST, "email", FILTER_SANITIZE_EMAIL);
+            $password = filter_input(INPUT_POST, "password", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+
+            if($pseudo && $email && $password) {
+                $newUser->add(["pseudo" => $pseudo, "email" => $email, "password" => $password]);
+                $this->redirectTo('security', 'login');
+            }
+        }
+
+        
+    }
 
 
     // exemple format = index.php?ctrl=forum&action=listTopics Cette URL veut dire qu'on va appeler la méthode listTopics du ForumController
