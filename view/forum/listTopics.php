@@ -20,6 +20,8 @@ $category = $result['data']['category'];
             <a href="index.php?ctrl=topic&action=listPosts&id=<?= $topic->getId() ?>"><?= $topic->getTopicName() ?></a>
             <p><?= $topic->getCreationDate() ?></p>
             <a><?= $topic->getUser()->getPseudo() ?></a>
+            <a href="index.php?ctrl=topic&action=delAllPostAndTopic&id=<?= $topic->getId() ?>"> X </a>
+        <br>
         </div>
 
 <?php } ?>

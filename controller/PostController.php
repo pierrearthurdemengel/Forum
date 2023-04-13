@@ -72,4 +72,14 @@ class PostController extends AbstractController implements ControllerInterface
             }
         }
     }
+
+
+    public function delPostById($id)    //Boite suppression
+    {
+        $postManager = new PostManager();
+        $post = $postManager->findOneByID($id); //recupère post par son id
+        $id_topic = $post->getTopic()->getId(); //récupère l'id du topic par le id_topic dans post puis l'id du topic
+                $postManager-> delPost($id);    
+                $this->redirectTo('topic', 'listPosts', $id_topic);
+    }
 }

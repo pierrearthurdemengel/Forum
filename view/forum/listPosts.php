@@ -32,7 +32,8 @@ $test[] = $post;?>
         <a><?= $post->getDatePost() ?></a>
         <a><?= "créé par " . $post->getUser()->getPseudo() ?></a>
         <a><?= $topic->getTopicName() ?></a>
-
+        <a href="index.php?ctrl=post&action=delPostById&id=<?= $post->getId() ?>"> X </a>
+        <br>
     <?php } ?>
 
     <form action='index.php?ctrl=post&action=addPost&id=<?= $topic->getId() ?>' method='POST'>

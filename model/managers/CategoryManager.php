@@ -48,15 +48,33 @@ class CategoryManager extends Manager{
         );
     }
 
-    // public function delCategory($id)
-    // {
-    //     $sql = "SELECT * FROM category WHERE id = :id;"
 
-    //     return $this->getOneById(
-    //         DAO::delete($sql, ['id' => $id], true),
-    //         $this -> className
-    //     );
-    // }
+
+    public function delCategory($id)
+    {
+        $sql = "DELETE
+        FROM " . $this->tableName . " c
+        WHERE c.id_category = :id";
+
+        return $this->getMultipleResults(
+            DAO::delete($sql, ['id' => $id]),
+            $this -> className
+        );
+    }
+
+    public function delTopic($id)
+    {
+        $sql = "DELETE
+                FROM " . $this->tableName . " p
+                WHERE p.topic_id = :id";
+
+
+        return $this->getMultipleResults(
+            // ou getOneOrNullResult si un seul objet
+            DAO::delete($sql, ['id' => $id]),
+            $this->className
+        );
+    }
     
 
 }

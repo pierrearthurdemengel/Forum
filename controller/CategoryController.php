@@ -8,6 +8,7 @@ use App\AbstractController;
 use App\ControllerInterface;
 use Model\Managers\CategoryManager;
 use Model\Managers\TopicManager;
+use Model\Managers\PostManager;
 
 class CategoryController extends AbstractController implements ControllerInterface
 {
@@ -41,15 +42,16 @@ class CategoryController extends AbstractController implements ControllerInterfa
         ];
     }
 
-    public function addCategory(){
-        
+    public function addCategory()
+    {
+
         $categoryManager = new CategoryManager();
 
-        if(isset($_POST['submit'])){
+        if (isset($_POST['submit'])) {
             $categoryName = filter_input(INPUT_POST, "addCategory", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-            
+
             // echo "test";die; ne recupère pas $categoryName
-            if($categoryName){
+            if ($categoryName) {
                 $categoryManager->add(["categoryName" => $categoryName]);
 
                 $this->redirectTo('category');
@@ -57,15 +59,16 @@ class CategoryController extends AbstractController implements ControllerInterfa
         }
     }
 
-    public function delCategory(){
+    public function delCategory()
+    {
 
         $categoryManager = new CategoryManager();
 
-        if(isset($_POST['submit'])) {
+        if (isset($_POST['submit'])) {
 
             $id_category = filter_input(INPUT_POST, "delCategory", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
-            if($id_category){
+            if ($id_category) {
                 $categoryManager->delete(["id_category" => $id_category]);
 
                 $this->redirectTo('category');
@@ -73,5 +76,31 @@ class CategoryController extends AbstractController implements ControllerInterfa
         }
     }
 
+    public function delAllTopicsByCategory($id)
+    {
+        $postManager = new PostManager();
+        $topicManager = new TopicManager();
+        $categoryManager = new CategoryManager();
 
+        $topics = $topicManager->findTopicByCategory($id);
+
+
+
+        foreach ($topics as $topic) {
+
+            $posts = $postManager->findPostByTopic($topic->getId());
+
+            if ($posts) {
+
+                foreach ($posts as $post) {
+                    $postManager->delPost($post->getId());
+                }
+            }
+            $topicManager->delTopic($topic->getId());
+        }
+
+
+        $categoryManager->delete($id);
+        $this->redirectTo('category', 'listCategory');
+    }
 }

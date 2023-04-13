@@ -18,6 +18,7 @@ if (isset($categorys)) {
 ?>
         <div>
             <a href="index.php?ctrl=topic&action=listTopicsByCategory&id=<?= $category->getId() ?>"><?= $category->getCategoryName() ?></a>
+            <a href="index.php?ctrl=category&action=delAllTopicsByCategory&id=<?= $category->getId() ?>"> X </a><br>
         </div>
 <?php }}
 ?>
@@ -34,19 +35,4 @@ if (isset($categorys)) {
             </div>
         </form>
 
-            <!-- formulaire delCategory -->
-    <form action="index.php?ctrl=category&action=delCategory" class="reply" method="post">
-            <div>
-                <label for="categoryName">Supprimer une catégorie:</label> 
-                <select name="delCategory" required id="id_category">
-                    <?php
-
-                    foreach ( $test as $category) {
-                        echo "<option value='" . $category->getId() . "'>" . $category->getCategoryName() . "</option>";
-                     }
-                    ?>
-
-            <div>
-                <input type="submit" name="submit" value="Supprimer">
-            </div>
-        </form>
+            

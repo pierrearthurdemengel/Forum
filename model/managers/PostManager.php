@@ -38,6 +38,20 @@ class PostManager extends Manager
         );
     }
 
+    public function delAllPostByTopic($id)
+    {
+        $sql = "DELETE
+                FROM " . $this->tableName . " p
+                WHERE p.topic_id = :id";
+
+
+        return $this->getMultipleResults(
+            // ou getOneOrNullResult si un seul objet
+            DAO::delete($sql, ['id' => $id]),
+            $this->className
+        );
+    }
+
     public function delPost($id)
     {
         $sql = "DELETE

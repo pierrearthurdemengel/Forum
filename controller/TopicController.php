@@ -50,75 +50,83 @@ class TopicController extends AbstractController implements ControllerInterface
         $categoryManager = new CategoryManager();
         $category = $categoryManager->findOneById($id);
         $topics = $topicManager->findAllTopics(["creationDate", "DESC"], $id);
-        
+
 
         return
             [
                 "view" => VIEW_DIR . "forum/listTopics.php",
-                "data" => 
+                "data" =>
                 [
                     "topics" => $topics,
                     "category" => $category
                 ]
             ];
-        }
-
-        public function addTopic($id){
-            $topicManager = new TopicManager();
-            $postManager = new PostManager();
-            
-            if(isset($_POST['submit'])) {
-                
-                $topicName = filter_input(INPUT_POST, "addTopic", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-                $user_id = 1;
-                $text = filter_input(INPUT_POST, "addPost", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-                
-                if($topicName) {
-                    $idLastTopic = $topicManager->add(["topicName" => $topicName, "category_id" => $id, "user_id" => $user_id]);
-                    
-                    $postManager->add(["text" => $text, "topic_id" => $idLastTopic, "user_id" => $user_id]);
-                    
-                    $this->redirectTo("topic", "listTopicsByCategory", $id);
-                }
-            }
-        }
-
-        public function addPost($id){
-            // $postManager = new PostManager();
-    
-            
-            if(isset($_POST['submit'])) {
-                $text = filter_input(INPUT_POST, "text", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-                $user_id = 1;
-    
-                if($text) {
-                    // $postManager->add(["text" => $text, "topic_id" => $id]);
-                    $this->redirectTo('forum', 'listPosts', $id);
-                }
-            }   
-        }
-            
-        // if($id) {
-        //     return [
-        //         "view" => VIEW_DIR. "forum/listTopics.php",
-        //         "data" => 
-        //         [
-        //             "categorys" => $categoryManager->findAll(["categoryName", "DESC"]),
-        //             "topics" => $topicManager->listTopicsByCategory($id)
-        //         ]
-        //         ];
-        //     }
-
-   
-
-
-    // public function addTopic($id){ //à finir
-    //     $PostManager = new PostManager();
-
-    //     if(isset($_POST['submit'])) {
-    //         $text = 
-    //     }
-    // }
     }
 
-    
+    public function addTopic($id)
+    {
+        $topicManager = new TopicManager();
+        $postManager = new PostManager();
+
+        if (isset($_POST['submit'])) {
+
+            $topicName = filter_input(INPUT_POST, "addTopic", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+            $user_id = 1;
+            $text = filter_input(INPUT_POST, "addPost", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+
+            if ($topicName) {
+                $idLastTopic = $topicManager->add(["topicName" => $topicName, "category_id" => $id, "user_id" => $user_id]);
+
+                $postManager->add(["text" => $text, "topic_id" => $idLastTopic, "user_id" => $user_id]);
+
+                $this->redirectTo("topic", "listTopicsByCategory", $id);
+            }
+        }
+    }
+
+    public function addPost($id)
+    {
+        // $postManager = new PostManager();
+
+
+        if (isset($_POST['submit'])) {
+            $text = filter_input(INPUT_POST, "text", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+            $user_id = 1;
+
+            if ($text) {
+                // $postManager->add(["text" => $text, "topic_id" => $id]);
+                $this->redirectTo('forum', 'listPosts', $id);
+            }
+        }
+    }
+
+
+    public function delAllPostAndTopic($id)    //Boite suppression
+    {
+        $postManager = new PostManager();
+        $topicManager = new TopicManager();
+
+        $topic = $topicManager->findOneById($id);
+        $catId = $topic->getCategory()->getId();
+        $posts = $postManager->findPostByTopic($id); //recupère tous les posts
+        
+        foreach ($posts as $post) {
+            $postManager->delPost($post->getId());
+        }
+        $topicManager->delete($id);
+        $this->redirectTo('topic', 'listTopicsByCategory', $catId);
+    }
+
+    // if($id) {
+    //     return [
+    //         "view" => VIEW_DIR. "forum/listTopics.php",
+    //         "data" => 
+    //         [
+    //             "categorys" => $categoryManager->findAll(["categoryName", "DESC"]),
+    //             "topics" => $topicManager->listTopicsByCategory($id)
+    //         ]
+    //         ];
+    //     }
+
+
+}

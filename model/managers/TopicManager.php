@@ -91,5 +91,21 @@ class TopicManager extends Manager{
         );
     }
 
+   
+
+
+    public function delTopic($id)
+    {
+        $sql = "DELETE
+                FROM " . $this->tableName . " p
+                WHERE p.id_topic = :id";
+
+
+        return $this->getMultipleResults(
+            // ou getOneOrNullResult si un seul objet
+            DAO::delete($sql, ['id' => $id]),
+            $this->className
+        );
+    }
 
 }
