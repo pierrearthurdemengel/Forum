@@ -134,5 +134,4 @@ final class User extends Entity{
 
                 return $this;
         }
-    
 }
