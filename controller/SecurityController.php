@@ -28,14 +28,6 @@ class SecurityController extends AbstractController implements ControllerInterfa
 
 
 
-
-
-
-
-
-
-
-
     // Inscription
     public function register()
     {
@@ -108,13 +100,14 @@ class SecurityController extends AbstractController implements ControllerInterfa
                 // on créer le nouvel utilisateur et on récupère son ID
                 $newUser = $userManager->add(["pseudo" => $pseudo, "email" => $email, "password" => $password]);
 
-                $this->redirectTo("user", "detailUser", $newUser);}
-            } else {
-                return [
-                    "view" => VIEW_DIR . "security/register.php",
-                ];
+                $this->redirectTo("user", "detailUser", $newUser);
             }
+        } else {
+            return [
+                "view" => VIEW_DIR . "security/register.php",
+            ];
         }
+    }
 
     // Connection
 
@@ -124,7 +117,7 @@ class SecurityController extends AbstractController implements ControllerInterfa
         $userManager = new UserManager();
 
         if (isset($_POST['submitLogin'])) {
-            
+
             $email = filter_input(INPUT_POST, "email", FILTER_SANITIZE_EMAIL);
             $password = filter_input(INPUT_POST, "password", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
@@ -132,7 +125,7 @@ class SecurityController extends AbstractController implements ControllerInterfa
             //     $this->logout();
             // }
 
-        $error = null;
+            $error = null;
 
             // Si les filtres passent
             if ($email && $password) {
@@ -142,7 +135,6 @@ class SecurityController extends AbstractController implements ControllerInterfa
                 if ($dbPass) {
                     // récupération du mdp
                     $hash = $dbPass->getPassword();
-
                     if (password_verify($password, $hash)) {
                         // retrouver l'utilisateur par son mail
                         $user = $userManager->findOneByEmail($email);

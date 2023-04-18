@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,9 +11,10 @@
     <link rel="stylesheet" href="<?= PUBLIC_DIR ?>/css/style.css">
     <title>FORUM</title>
 </head>
+
 <body>
-    <div id="wrapper"> 
-       
+    <div id="wrapper">
+
         <div id="mainpage">
             <!-- c'est ici que les messages (erreur ou succès) s'affichent-->
             <h3 class="message" style="color: red"><?= App\Session::getFlash("error") ?></h3>
@@ -21,50 +23,46 @@
                 <nav>
                     <div id="nav-left">
                         <li class="actve"><a href="index.php?ctrl=index">Accueil</a></li>
+
+                        <a href="index.php?ctrl=home&action=users">Voir la liste des gens</a>
+                        <a href="index.php?ctrl=forum&action=listCategorys">liste des categories</a>
+
+                        <!-- "index.php?+ctrl=NOMCONTROLLER&action=NOMACTION"-->
+                        <!-- si il ne trouve pas -> redirige vers home -->
+
+                    </div>
+                    <div id="nav-right">
+
                         <?php
-                        if(App\Session::isAdmin()){
-                            ?>
-                            <a href="index.php?ctrl=home&action=users">Voir la liste des gens</a>
-                            <a href="index.php?ctrl=forum&action=listCategorys">liste des categories</a>
+                        if (App\Session::getUser()) {
+                        ?>
+                            <a href="index.php?ctrl=sujet&action=listSujets">la liste des topics</a>
+                            <a href="index.php?ctrl=categorie&action=listCategories">la liste des catégories</a>
+                            <a href="/security/viewProfile.html"><span class="fas fa-user"></span>&nbsp;<?= App\Session::getUser() ?></a>
+                            <a href="/security/logout.html">Déconnexion</a>
+                        <?php
+                        } else {
+                        ?>
+                            <nav class="navbar">
+                                <a href="#" class="logo">Forum</a>
+                                <div class="nav-links">
 
-                            <!-- "index.php?+ctrl=NOMCONTROLLER&action=NOMACTION"-->
-                            <!-- si il ne trouve pas -> redirige vers home -->
+                                    <ul>
+                                        <li><a href="index.php?ctrl=security&action=login">Connexion</a></li>
+                                        <li><a href="index.php?ctrl=security&action=register">Inscription</a></li>
+                                        <li><a href="index.php?ctrl=category&action=listCategorys">liste des categories</a></li>
+                                        <li><a href="index.php?ctrl=sujet&action=listTopics">la liste des topics</a></li>
+                                    </ul>
+                                </div>
+                            </nav>
 
-                            
                         <?php
                         }
                         ?>
                     </div>
-                    <div id="nav-right">
-                        <?php
-                        
-                        if(App\Session::getUser()){
-                            ?>
-                            <a href="/security/viewProfile.html"><span class="fas fa-user"></span>&nbsp;<?= App\Session::getUser()?></a>
-                            <a href="/security/logout.html">Déconnexion</a>
-                            <?php
-                        }
-                        else{
-                            ?>
-                    <nav class="navbar">
-                        <a href="#" class="logo">Forum</a>
-                        <div class="nav-links"> 
-
-                            <ul>
-                                <li><a href="index.php?ctrl=security&action=login">Connexion</a></li>
-                                <li><a href="index.php?ctrl=security&action=register">Inscription</a></li>
-                                <li><a href="index.php?ctrl=category&action=listCategorys">liste des categories</a></li>
-                            </ul>
-                        </div>  
-                    </nav>
-
-                            <?php
-                        }
-                    ?>
-                    </div>
                 </nav>
             </header>
-            
+
             <main id="forum">
                 <?= $page ?>
             </main>
@@ -74,22 +72,18 @@
             <!--<button id="ajaxbtn">Surprise en Ajax !</button> -> cliqué <span id="nbajax">0</span> fois-->
         </footer>
     </div>
-    <script
-        src="https://code.jquery.com/jquery-3.4.1.min.js"
-        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
-        crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous">
     </script>
     <script>
-
-        $(document).ready(function(){
-            $(".message").each(function(){
-                if($(this).text().length > 0){
-                    $(this).slideDown(500, function(){
+        $(document).ready(function() {
+            $(".message").each(function() {
+                if ($(this).text().length > 0) {
+                    $(this).slideDown(500, function() {
                         $(this).delay(3000).slideUp(500)
                     })
                 }
             })
-            $(".delete-btn").on("click", function(){
+            $(".delete-btn").on("click", function() {
                 return confirm("Etes-vous sûr de vouloir supprimer?")
             })
             tinymce.init({
@@ -101,14 +95,14 @@
                     'insertdatetime media table paste code help wordcount'
                 ],
                 toolbar: 'undo redo | formatselect | ' +
-                'bold italic backcolor | alignleft aligncenter ' +
-                'alignright alignjustify | bullist numlist outdent indent | ' +
-                'removeformat | help',
+                    'bold italic backcolor | alignleft aligncenter ' +
+                    'alignright alignjustify | bullist numlist outdent indent | ' +
+                    'removeformat | help',
                 content_css: '//www.tiny.cloud/css/codepen.min.css'
             });
         })
 
-        
+
 
         /*
         $("#ajaxbtn").on("click", function(){
@@ -124,4 +118,5 @@
         })*/
     </script>
 </body>
+
 </html>
