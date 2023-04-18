@@ -1,7 +1,4 @@
-
 <?php
-
-use Model\Entities\Category;
 
 $category = $result["data"]['category'];
 ?>

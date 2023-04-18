@@ -38,6 +38,21 @@ class PostManager extends Manager
         );
     }
 
+    public function listPostsByUser($id){
+        parent::connect();
+
+            $sql = "SELECT *
+                    FROM ".$this->tableName."
+                    WHERE user_id = :id
+                    ORDER BY datePost DESC
+                    ";
+
+            return $this->getMultipleResults(
+                DAO::select($sql, ['id' => $id], true), 
+                $this->className
+            );
+    }
+
     public function delAllPostByTopic($id)
     {
         $sql = "DELETE

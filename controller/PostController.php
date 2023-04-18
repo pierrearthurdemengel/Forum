@@ -46,7 +46,6 @@ class PostController extends AbstractController implements ControllerInterface
     public function addPost($id)
     {
         $postManager = new PostManager();
-        
         if(isset($_POST['submit'])) {
             
             $text = filter_input(INPUT_POST, "text", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
