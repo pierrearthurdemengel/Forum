@@ -48,6 +48,10 @@ foreach ($topics as $topic) {
         <input type="text" name="addTopic"></br>
     </div>
     <div>
+            <label for="addPost">Message: </label>
+            <textarea name="addPost" rows= "3"></textarea>
+        </div>
+    <div>
         <input type="submit" name="submit" value="Ajouter"></br>
     </div>
 </form>

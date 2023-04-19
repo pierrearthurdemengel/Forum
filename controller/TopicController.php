@@ -100,37 +100,38 @@ class TopicController extends AbstractController implements ControllerInterface
     public function addTopic($id)
     {
         $topicManager = new TopicManager();
-        $user = new User();
-        
+        $postManager = new PostManager();
+    
         if (isset($_SESSION["user"])) {
-            
+
+            $user_id = Session::getUser()->getId();
+
             if (isset($_POST['submit'])) {
-                
+
                 $addTopic = filter_input(INPUT_POST, "addTopic", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-                // $text = filter_input(INPUT_POST, "addPost", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-                $user_id = Session::getUser()->getId();
-                
-
-                if ($addTopic && $user_id && $topicManager->getBan() == !1) {
-
-
-                    $idLastTopic = $addTopic->add([
+                $addPost = filter_input(INPUT_POST, "addPost", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+                $user = Session::getUser();
+    
+                if ($addTopic && $addPost && $user->getBan() ==! 1) {
+                    $idLastTopic = $topicManager->add([
                         "topicName" => $addTopic, 
                         "category_id" => $id, 
                         "user_id" => $user_id
                     ]);
-
-                    // $postManager->add([
-                    //     "text" => $text, 
-                    //     "topic_id" => $idLastTopic, 
-                    //     "user_id" => $user]);
-
+                    $postManager->add([
+                        "topic_id" => $idLastTopic, 
+                        "text" => $addPost, 
+                        "user_id" => $user_id
+                    ]);
                     $this->redirectTo("topic", "listTopicsByCategory", $idLastTopic);
+                } else {
+                    Session::addFlash("error", "Tous les champs doivent être remplis et vous ne pouvez pas poster de message si vous êtes banni.");
+                    $this->redirectTo("sujet", "listTopicsByCategory", $id);
                 }
-
-                Session::addFlash("error", "Champ vide");
-                $this->redirectTo("sujet", "listTopicsByCategory", $id);
             }
+        } else {
+            Session::addFlash("error", "Vous devez être connecté pour poster un sujet.");
+            $this->redirectTo("sujet", "listTopicsByCategory", $id);
         }
     }
 

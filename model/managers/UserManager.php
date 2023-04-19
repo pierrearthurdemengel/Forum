@@ -4,7 +4,7 @@ namespace Model\Managers;
 
 use App\Manager;
 use App\DAO;
-use model\Entities\User;
+
 
 class UserManager extends Manager
 {
@@ -18,6 +18,19 @@ class UserManager extends Manager
         parent::connect();
     }
 
+    public function listInfoUser($id){
+        parent::connect();
+
+            $sql = "SELECT *
+                    FROM ".$this->tableName."
+                    WHERE user_id = :id
+                    ";
+
+            return $this->getMultipleResults(
+                DAO::select($sql, ['id' => $id], true), 
+                $this->className
+            );
+    }
     public function retrievePassword($email)
     {
         $id = $_GET["id"];

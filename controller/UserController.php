@@ -22,7 +22,7 @@ class UserController extends AbstractController implements ControllerInterface
         return [
             "view" => VIEW_DIR . "forum/listTopics.php",
             "data" => [
-                "categorys" => $categoryManager->findAll(["CategoryName", "DESC"]),
+                "categorys" => $categoryManager->findAll(["categoryName", "DESC"]),
                 "topics" => $topicManager->findAll(["topicName", "DESC"])
             ]
         ];
