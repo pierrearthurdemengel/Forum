@@ -56,6 +56,8 @@ class TopicManager extends Manager {
     );
     }
 
+    
+
     public function findTopicByCategory($id)
     {
         $sql = "SELECT *

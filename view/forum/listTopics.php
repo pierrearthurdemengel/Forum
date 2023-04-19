@@ -2,6 +2,7 @@
 
 $topics = (!$result['data']['topics']) ? [] : $result['data']['topics'];
 $category = $result['data']['category'];
+$categorySelected = null;
 
 // catégorie
 if (isset($result["data"]['categorySelected'])) {
@@ -27,8 +28,12 @@ if (isset($_SESSION['user'])) {
 <?php
 
 foreach ($topics as $topic) {
-?>
-
+    // Vérifier si la catégorie sélectionnée est définie et si le sujet appartient à cette catégorie
+    if (isset($categorySelected) && ($topic->getCategory() == false || $topic->getCategory()->getId() != $categorySelected)) {
+        continue;
+    }
+    // Afficher le sujet
+    ?>
     <div><br>
         <a href="index.php?ctrl=topic&action=listPosts&id=<?= $topic->getId() ?>"><?= $topic->getTopicName() ?></a>
         <p><?= $topic->getCreationDate() ?></p></br>
@@ -36,8 +41,7 @@ foreach ($topics as $topic) {
         <a href="index.php?ctrl=topic&action=delAllPostAndTopic&id=<?= $topic->getId() ?>"> X </a></br>
         <br>
     </div>
-
-<?php } ?>
+    <?php } ?>
 
 
 <!-- formulaire topic + 1er message du nouveau sujet -->

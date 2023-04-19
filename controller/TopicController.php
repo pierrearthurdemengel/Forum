@@ -37,71 +37,69 @@ class TopicController extends AbstractController implements ControllerInterface
     {
         $topicManager = new TopicManager();
         $categoryManager = new CategoryManager();
-
+    
         $category = $categoryManager->findOneById($id);
-        $topics = $topicManager->findAllTopics(["creationDate", "DESC"], $id);
-
+    
         if (isset($_POST['category'])) {
-
+    
             $categorySelected = filter_input(INPUT_POST, 'category', FILTER_SANITIZE_NUMBER_INT);
-
-            return
-                [
-                    "view" => VIEW_DIR . "forum/listTopics.php",
-                    "data" =>
-                    [
-                        "topics" => $topics,
-                        "category" => $category,
-                        "categorySelected" => $categorySelected
-                    ]
-                ];
+    
+            return [
+                "view" => VIEW_DIR . "forum/listTopics.php",
+                "data" => [
+                    "category" => $category,
+                    "topics" => $topicManager->listTopicsByCategory($categorySelected),
+                    "categorySelected" => $categorySelected
+                ]
+            ];
         } else {
             $categorySelected = null;
         }
-
+    
         // liste des sujets par catégories (via "la liste des catégories")
         if ($id) {
             return [
                 "view" => VIEW_DIR . "forum/listTopics.php",
                 "data" => [
                     "categories" => $categoryManager->findAll(["topicName", "DESC"]),
-                    "sujets" => $topicManager->listTopicsByCategory($id)
+                    "topics" => $topicManager->listTopicsByCategory($id)
                 ]
             ];
-
+    
             // vue par defaut sans id spécifier
         } else {
             $this->redirectTo("topic");
         }
     }
-    
-    
-    
-    
-    public function topicsThread($id){
+
+
+
+
+    public function topicsThread($id)
+    {
         // Manager
         $topicManager = new TopicManager();
         $postManager = new PostManager();
 
-        if($id) {
+        if ($id) {
             return [
-                "view" => VIEW_DIR."forum/listPosts.php",
+                "view" => VIEW_DIR . "forum/listPosts.php",
                 "data" => [
                     "posts" => $postManager->findPostByTopic($id),
                     "topic" => $topicManager->findOneById($id)
                 ]
             ];
-        } 
+        }
     }
-    
-    
-    
-    
+
+
+
+
     public function addTopic($id)
     {
         $topicManager = new TopicManager();
         $postManager = new PostManager();
-    
+
         if (isset($_SESSION["user"])) {
 
             $user_id = Session::getUser()->getId();
@@ -111,16 +109,16 @@ class TopicController extends AbstractController implements ControllerInterface
                 $addTopic = filter_input(INPUT_POST, "addTopic", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
                 $addPost = filter_input(INPUT_POST, "addPost", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
                 $user = Session::getUser();
-    
-                if ($addTopic && $addPost && $user->getBan() ==! 1) {
+
+                if ($addTopic && $addPost && $user->getBan() == !1) {
                     $idLastTopic = $topicManager->add([
-                        "topicName" => $addTopic, 
-                        "category_id" => $id, 
+                        "topicName" => $addTopic,
+                        "category_id" => $id,
                         "user_id" => $user_id
                     ]);
                     $postManager->add([
-                        "topic_id" => $idLastTopic, 
-                        "text" => $addPost, 
+                        "topic_id" => $idLastTopic,
+                        "text" => $addPost,
                         "user_id" => $user_id
                     ]);
                     $this->redirectTo("topic", "listTopicsByCategory", $idLastTopic);
@@ -144,7 +142,7 @@ class TopicController extends AbstractController implements ControllerInterface
         // $user = Session::getUser();
 
         if (isset($_POST['submit'])) {
-            
+
             $text = filter_input(INPUT_POST, "addPost", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
             $user_id = Session::getUser()->getId();
@@ -189,7 +187,7 @@ class TopicController extends AbstractController implements ControllerInterface
         $topic = $topicManager->findOneById($id);
         $catId = $topic->getCategory()->getId();
         $posts = $postManager->findPostByTopic($id); //recupère tous les posts du Topic
-
+        die;
         foreach ($posts as $post) {
             $postManager->delPost($post->getId());
         }
@@ -204,7 +202,8 @@ class TopicController extends AbstractController implements ControllerInterface
 
 
 
-    public function delTopic($id){
+    public function delTopic($id)
+    {
         // Manager
         $topicManager = new TopicManager();
         $postManager = new PostManager();
@@ -218,9 +217,9 @@ class TopicController extends AbstractController implements ControllerInterface
             // on supprime les messages du topic PUIS le topic
             $postManager->delAllPostByTopic($id);
             $topicManager->delTopic($id);
-        } 
+        }
 
-        $this->redirectTo('topic','topicsByCategory');
+        $this->redirectTo('topic', 'topicsByCategory');
     }
 
     // if($id) {
