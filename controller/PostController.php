@@ -49,9 +49,10 @@ class PostController extends AbstractController implements ControllerInterface
         if(isset($_POST['submit'])) {
             
             $text = filter_input(INPUT_POST, "text", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-            $user_id = Session::getUser()->getId();
+            $user = Session::getUser();
+            $user_id = $user->getId();
 
-            if($text && $user_id && $user_id->getBan() == !1) {
+            if($text && $user_id && $user->getBan() == 0) {
 
                 $postManager->add(["text" => $text, "topic_id" => $id, "user_id" => $user_id]);
                 $this->redirectTo('topic', 'listPosts', $id);

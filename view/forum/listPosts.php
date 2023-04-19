@@ -19,7 +19,7 @@ if (isset($result["data"]['post'])) {
     <a><?= $topic->getCreationDate() ?></a>
     <a><?= $topic->getClosed() ?></a>
     <a><?= "créé par " . $topic->getUser()->getPseudo() ?></a>
-    <a><?= $topic->getCategory()->getCategoryName() ?></a>
+    <a><?= $topic->getCategory() ? $topic->getCategory()->getCategoryName() : '' ?></a>
 </div>
 <span>
     <?php

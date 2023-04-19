@@ -137,6 +137,26 @@ class TopicController extends AbstractController implements ControllerInterface
 
 
 
+    public function addPost($id)
+    {
+
+        $topicManager = new TopicManager();
+        // $user = Session::getUser();
+
+        if (isset($_POST['submit'])) {
+            
+            $text = filter_input(INPUT_POST, "addPost", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+
+            $user_id = Session::getUser()->getId();
+
+            if ($text && $user_id && $user_id->getBan() == !1) {
+
+                $topicManager->add(["topic_id" => $id, "user_id" => $user_id, "text" => $text]);
+
+                $this->redirectTo('forum', 'listPosts', $id);
+            }
+        }
+    }
 
     public function listPosts($id)
     {
@@ -157,27 +177,6 @@ class TopicController extends AbstractController implements ControllerInterface
 
 
 
-    public function addPost($id)
-    {
-
-        $topicManager = new TopicManager();
-        $userManager = new UserManager();
-
-
-        if (isset($_POST['submit'])) {
-            
-            $text = filter_input(INPUT_POST, "text", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-
-            $user = Session::getUser()->getId();
-
-            if ($text && $user && $userManager->getBan() == !1) {
-
-                $topicManager->add(["topic_id" => $id, "user_id" => $user, "text" => $text]);
-
-                $this->redirectTo('forum', 'listPosts', $id);
-            }
-        }
-    }
 
 
 
@@ -189,13 +188,39 @@ class TopicController extends AbstractController implements ControllerInterface
 
         $topic = $topicManager->findOneById($id);
         $catId = $topic->getCategory()->getId();
-        $posts = $postManager->findPostByTopic($id); //recupère tous les posts
+        $posts = $postManager->findPostByTopic($id); //recupère tous les posts du Topic
 
         foreach ($posts as $post) {
             $postManager->delPost($post->getId());
         }
         $topicManager->delete($id);
         $this->redirectTo('topic', 'listTopicsByCategory', $catId);
+    }
+
+
+
+
+
+
+
+
+    public function delTopic($id){
+        // Manager
+        $topicManager = new TopicManager();
+        $postManager = new PostManager();
+
+        // user
+        $topic = $topicManager->findOneById($id);
+        $user = Session::getUser();
+
+        //on vérifie si l'user a les droits admin/modérateur OU si il est l'auteur du topic
+        if (($user->getRole() == "ROLE_ADMIN" || $user->getRole() == "modo" || $user->getId() === $topic->getUserr()->getId()) && $user->getBan() == !1) {
+            // on supprime les messages du topic PUIS le topic
+            $postManager->delAllPostByTopic($id);
+            $topicManager->delTopic($id);
+        } 
+
+        $this->redirectTo('topic','topicsByCategory');
     }
 
     // if($id) {
