@@ -4,6 +4,7 @@ namespace Model\Managers;
 
 use App\Manager;
 use App\DAO;
+use model\Entities\User;
 
 class UserManager extends Manager
 {

@@ -3,7 +3,6 @@
 namespace Controller;
 
 use App\Session;
-use App\DAO;
 use App\AbstractController;
 use App\ControllerInterface;
 use Model\Managers\TopicManager;
@@ -46,13 +45,17 @@ class PostController extends AbstractController implements ControllerInterface
     public function addPost($id)
     {
         $postManager = new PostManager();
+
         if(isset($_POST['submit'])) {
             
             $text = filter_input(INPUT_POST, "text", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-            $user_id = 1;
-            if($text) {
+            $user_id = Session::getUser()->getId();
+
+            if($text && $user_id && $user_id->getBan() == !1) {
+
                 $postManager->add(["text" => $text, "topic_id" => $id, "user_id" => $user_id]);
                 $this->redirectTo('topic', 'listPosts', $id);
+
             }
         }
     }
@@ -63,8 +66,10 @@ class PostController extends AbstractController implements ControllerInterface
         $postManager = new PostManager();
         
         if(isset($_POST['submit'])) {
+
             $id_post = filter_input(INPUT_POST, "delPost", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-            $user_id = 1;
+            $user_id = Session::getUser()->getId();
+            
             if($id_post) {
                 $postManager-> delPost($id_post);
                 $this->redirectTo('topic', 'listPosts', $id);

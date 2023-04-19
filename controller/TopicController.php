@@ -8,7 +8,8 @@ use App\ControllerInterface;
 use Model\Managers\TopicManager;
 use Model\Managers\PostManager;
 use Model\Managers\CategoryManager;
-
+use Model\Managers\UserManager;
+use model\Entities\User;
 
 class TopicController extends AbstractController implements ControllerInterface
 {
@@ -29,6 +30,113 @@ class TopicController extends AbstractController implements ControllerInterface
     }
 
 
+
+
+
+    public function TopicsByCategory($id)
+    {
+        $topicManager = new TopicManager();
+        $categoryManager = new CategoryManager();
+
+        $category = $categoryManager->findOneById($id);
+        $topics = $topicManager->findAllTopics(["creationDate", "DESC"], $id);
+
+        if (isset($_POST['category'])) {
+
+            $categorySelected = filter_input(INPUT_POST, 'category', FILTER_SANITIZE_NUMBER_INT);
+
+            return
+                [
+                    "view" => VIEW_DIR . "forum/listTopics.php",
+                    "data" =>
+                    [
+                        "topics" => $topics,
+                        "category" => $category,
+                        "categorySelected" => $categorySelected
+                    ]
+                ];
+        } else {
+            $categorySelected = null;
+        }
+
+        // liste des sujets par catégories (via "la liste des catégories")
+        if ($id) {
+            return [
+                "view" => VIEW_DIR . "forum/listTopics.php",
+                "data" => [
+                    "categories" => $categoryManager->findAll(["topicName", "DESC"]),
+                    "sujets" => $topicManager->listTopicsByCategory($id)
+                ]
+            ];
+
+            // vue par defaut sans id spécifier
+        } else {
+            $this->redirectTo("topic");
+        }
+    }
+    
+    
+    
+    
+    public function topicsThread($id){
+        // Manager
+        $topicManager = new TopicManager();
+        $postManager = new PostManager();
+
+        if($id) {
+            return [
+                "view" => VIEW_DIR."forum/listPosts.php",
+                "data" => [
+                    "posts" => $postManager->findPostByTopic($id),
+                    "topic" => $topicManager->findOneById($id)
+                ]
+            ];
+        } 
+    }
+    
+    
+    
+    
+    public function addTopic($id)
+    {
+        $topicManager = new TopicManager();
+        $user = new User();
+        
+        if (isset($_SESSION["user"])) {
+            
+            if (isset($_POST['submit'])) {
+                
+                $addTopic = filter_input(INPUT_POST, "addTopic", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+                // $text = filter_input(INPUT_POST, "addPost", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+                $user_id = Session::getUser()->getId();
+                
+
+                if ($addTopic && $user_id && $topicManager->getBan() == !1) {
+
+
+                    $idLastTopic = $addTopic->add([
+                        "topicName" => $addTopic, 
+                        "category_id" => $id, 
+                        "user_id" => $user_id
+                    ]);
+
+                    // $postManager->add([
+                    //     "text" => $text, 
+                    //     "topic_id" => $idLastTopic, 
+                    //     "user_id" => $user]);
+
+                    $this->redirectTo("topic", "listTopicsByCategory", $idLastTopic);
+                }
+
+                Session::addFlash("error", "Champ vide");
+                $this->redirectTo("sujet", "listTopicsByCategory", $id);
+            }
+        }
+    }
+
+
+
+
     public function listPosts($id)
     {
         $topicManager = new TopicManager();
@@ -44,60 +152,33 @@ class TopicController extends AbstractController implements ControllerInterface
             ];
     }
 
-    public function listTopicsByCategory($id)
+
+
+
+
+    public function addPost($id)
     {
+
         $topicManager = new TopicManager();
-        $categoryManager = new CategoryManager();
-        $category = $categoryManager->findOneById($id);
-        $topics = $topicManager->findAllTopics(["creationDate", "DESC"], $id);
+        $userManager = new UserManager();
 
-
-        return
-            [
-                "view" => VIEW_DIR . "forum/listTopics.php",
-                "data" =>
-                [
-                    "topics" => $topics,
-                    "category" => $category
-                ]
-            ];
-    }
-
-    public function addTopic($id)
-    {
-        $topicManager = new TopicManager();
-        $postManager = new PostManager();
 
         if (isset($_POST['submit'])) {
+            
+            $text = filter_input(INPUT_POST, "text", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
-            $topicName = filter_input(INPUT_POST, "addTopic", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-            $user_id = 1;
-            $text = filter_input(INPUT_POST, "addPost", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+            $user = Session::getUser()->getId();
 
-            if ($topicName) {
-                $idLastTopic = $topicManager->add(["topicName" => $topicName, "category_id" => $id, "user_id" => $user_id]);
+            if ($text && $user && $userManager->getBan() == !1) {
 
-                $postManager->add(["text" => $text, "topic_id" => $idLastTopic, "user_id" => $user_id]);
+                $topicManager->add(["topic_id" => $id, "user_id" => $user, "text" => $text]);
 
-                $this->redirectTo("topic", "listTopicsByCategory", $id);
+                $this->redirectTo('forum', 'listPosts', $id);
             }
         }
     }
 
-    public function addPost($id){
-        // $postManager = new PostManager();
 
-        
-        if(isset($_POST['submit'])) {
-            $text = filter_input(INPUT_POST, "text", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-            $user_id = 1;
-
-            if($text) {
-                // $postManager->add(["text" => $text, "topic_id" => $id]);
-                $this->redirectTo('forum', 'listPosts', $id);
-            }
-        }   
-    }
 
 
     public function delAllPostAndTopic($id)    //Boite suppression
@@ -108,7 +189,7 @@ class TopicController extends AbstractController implements ControllerInterface
         $topic = $topicManager->findOneById($id);
         $catId = $topic->getCategory()->getId();
         $posts = $postManager->findPostByTopic($id); //recupère tous les posts
-        
+
         foreach ($posts as $post) {
             $postManager->delPost($post->getId());
         }

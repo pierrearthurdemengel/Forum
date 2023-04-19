@@ -45,11 +45,11 @@ $test[] = $post;?>
                 <form action="index.php?ctrl=post&action=delPost&id=<?= $topic->getId() ?>" class="reply" method="post">
             <div>
                 <label for="text">Supprimer un poste :</label> 
-                <select name="delPost" required id="id_post">
+                <select name="delPost" required id="id_post"></br>
                     <?php
 
                     foreach ( $test as $post) {
-                        echo "<option value='" . $post->getId() . "'>" . $post->getText() . "</option>";
+                        echo "<option value='" . $post->getId() . "'>" . $post->getText() . "</option></br>";
                      }
                     ?>
 

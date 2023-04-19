@@ -8,7 +8,7 @@
     $test = [];
 ?>
 
-<h1>liste des catégories</h1>
+<h1>liste des catégories</h1></br>
 
 <?php
 if (isset($categorys)) {
@@ -17,7 +17,7 @@ if (isset($categorys)) {
 
 ?>
         <div>
-            <a href="index.php?ctrl=topic&action=listTopicsByCategory&id=<?= $category->getId() ?>"><?= $category->getCategoryName() ?></a>
+            <a href="index.php?ctrl=topic&action=listTopicsByCategory&id=<?= $category->getId() ?>"><?= $category->getCategoryName() ?></a></br>
             <a href="index.php?ctrl=category&action=delAllTopicsByCategory&id=<?= $category->getId() ?>"> X </a><br>
         </div>
 <?php }}
@@ -28,7 +28,7 @@ if (isset($categorys)) {
     <form action="index.php?ctrl=category&action=addCategory" class="reply" method="post">
             <div>
                 <label for="nomCategorie">Ajouter une catégorie:</label> 
-                <input name="addCategory" required>
+                <input name="addCategory" required></br>
             </div>
             <div>
                 <input type="submit" name="submit" value="Ajouter">

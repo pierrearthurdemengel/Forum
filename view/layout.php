@@ -8,7 +8,9 @@
     <script src="https://cdn.tiny.cloud/1/zg3mwraazn1b2ezih16je1tc6z7gwp5yd4pod06ae5uai8pa/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" integrity="sha256-h20CPZ0QyXlBuAw7A+KluUYx/3pK+c7lYEpqLTlxjYQ=" crossorigin="anonymous" />
     <link rel="stylesheet" type="text/css" href="normalize.css" media="all" />
-    <link rel="stylesheet" href="<?= PUBLIC_DIR ?>/css/style.css">
+    <link rel="stylesheet" href="<?= PUBLIC_DIR ?>public/css/style.css">
+    <link rel="stylesheet" href="<?= PUBLIC_DIR ?>public/css/nomralize.css">
+    
     <title>FORUM</title>
 </head>
 
@@ -24,8 +26,8 @@
                     <div id="nav-left">
                         <li class="actve"><a href="index.php?ctrl=index">Accueil</a></li>
 
-                        <a href="index.php?ctrl=home&action=users">Voir la liste des gens</a>
-                        <a href="index.php?ctrl=forum&action=listCategorys">liste des categories</a>
+                        <a href="index.php?ctrl=home&action=users">Voir la liste des gens</a></br>
+                        <a href="index.php?ctrl=forum&action=listCategorys">liste des categories</a></br>
 
                         <!-- "index.php?+ctrl=NOMCONTROLLER&action=NOMACTION"-->
                         <!-- si il ne trouve pas -> redirige vers home -->
@@ -36,10 +38,10 @@
                         <?php
                         if (App\Session::getUser()) {
                         ?>
-                            <a href="index.php?ctrl=sujet&action=listSujets">la liste des topics</a>
-                            <a href="index.php?ctrl=categorie&action=listCategories">la liste des catégories</a>
-                            <a href="/security/viewProfile.html"><span class="fas fa-user"></span>&nbsp;<?= App\Session::getUser() ?></a>
-                            <a href="/security/logout.html">Déconnexion</a>
+                            <a href="index.php?ctrl=forum&action=listTopics">la liste des topics</a></br>
+                            <a href="index.php?ctrl=forum&action=listCategorys">la liste des catégories</a></br>
+                            <a href="index.php?ctrl=user&action=modifyUser&id=<?= App\Session::getUser()->getId()?>"><span class="fas fa-user"></span>&nbsp;<?= App\Session::getUser()->getPseudo()?></a>
+                            <a href="index.php?ctrl=security&action=logout">Déconnexion</a></br>
                         <?php
                         } else {
                         ?>
@@ -48,10 +50,10 @@
                                 <div class="nav-links">
 
                                     <ul>
-                                        <li><a href="index.php?ctrl=security&action=login">Connexion</a></li>
-                                        <li><a href="index.php?ctrl=security&action=register">Inscription</a></li>
-                                        <li><a href="index.php?ctrl=category&action=listCategorys">liste des categories</a></li>
-                                        <li><a href="index.php?ctrl=sujet&action=listTopics">la liste des topics</a></li>
+                                        <li><a href="index.php?ctrl=security&action=login">Connexion</a></li></br>
+                                        <li><a href="index.php?ctrl=security&action=register">Inscription</a></li></br>
+                                        <li><a href="index.php?ctrl=category&action=listCategorys">liste des categories</a></li></br>
+                                        <li><a href="index.php?ctrl=sujet&action=listTopics">la liste des topics</a></li></br>
                                     </ul>
                                 </div>
                             </nav>

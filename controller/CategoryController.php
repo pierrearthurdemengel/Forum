@@ -48,13 +48,21 @@ class CategoryController extends AbstractController implements ControllerInterfa
         $categoryManager = new CategoryManager();
 
         if (isset($_POST['submit'])) {
+
             $categoryName = filter_input(INPUT_POST, "addCategory", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
+            $user = Session::getUser();
+
             // echo "test";die; ne recupère pas $categoryName
-            if ($categoryName) {
+            if ($categoryName && $user && $user->getRole() == "ROLE_ADMIN") {
+
                 $categoryManager->add(["categoryName" => $categoryName]);
 
                 $this->redirectTo('category');
+            }
+
+            else{
+                echo "Demandez à un admin pour ajouter une nouvelle catégorie";
             }
         }
     }

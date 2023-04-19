@@ -141,7 +141,7 @@ class SecurityController extends AbstractController implements ControllerInterfa
                         // comparaison du hash de la bdd et le mdp renseigné
                         if (password_verify($password, $hash)) {
                             // si l'utilisateur n'est pas banni
-                            if ($user->getStatus()) {
+                            if ($user->getRole()) {
                                 // Mise de l'utilisateur en session
                                 Session::setUser($user);
                                 $this->redirectTo("user", "detailUser", $user->getId());

@@ -12,6 +12,7 @@ final class User extends Entity
         private $password;
         private $dateSignIn;
         private $role;
+        private $ban;
 
         public function __construct($data)
         {
@@ -144,21 +145,21 @@ final class User extends Entity
         }
 
 
-        //         /**
-        //  * Get the value of ban
-        //  */
-        // public function getBan()
-        // {
-        //         return $this->ban;
-        // }
+                /**
+         * Get the value of ban
+         */
+        public function getBan()
+        {
+                return $this->ban;
+        }
 
-        // /**
-        //  * Set the value of ban
-        //  */
-        // public function setBan($ban): self
-        // {
-        //         $this->ban = $ban;
+        /**
+         * Set the value of ban
+         */
+        public function setBan($ban): self
+        {
+                $this->ban = $ban;
 
-        //         return $this;
-        // }
+                return $this;
+        }
 }
