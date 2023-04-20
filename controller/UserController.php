@@ -10,6 +10,7 @@ use Model\Managers\PostManager;
 use Model\Managers\TopicManager;
 use Model\Managers\CategoryManager;
 
+
 class UserController extends AbstractController implements ControllerInterface
 {
 
@@ -27,7 +28,7 @@ class UserController extends AbstractController implements ControllerInterface
             ]
         ];
     }
-    
+
     public function detailUser($id)
     {
 
@@ -54,5 +55,28 @@ class UserController extends AbstractController implements ControllerInterface
                 "user" => $userManager->findOneById($id)
             ]
         ];
+    }
+
+    public function listUsers($id)
+    {
+        $userManager = new UserManager();
+
+        return [
+            "view" => VIEW_DIR . "forum/listUsers.php",
+            "data" => [
+                "users" => $userManager->findAll(["pseudo", "DESC"])
+            ]
+        ];
+    }
+
+    public function ban($id)
+    {
+        $userManager = new UserManager();
+        $currentUser = Session::getUser();
+
+        if ($currentUser->getRole() == 'ROLE_ADMIN') {
+
+            $userManager->ban($id);
+        }
     }
 }

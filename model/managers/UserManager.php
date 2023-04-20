@@ -18,18 +18,19 @@ class UserManager extends Manager
         parent::connect();
     }
 
-    public function listInfoUser($id){
+    public function listInfoUser($id)
+    {
         parent::connect();
 
-            $sql = "SELECT *
-                    FROM ".$this->tableName."
+        $sql = "SELECT *
+                    FROM " . $this->tableName . "
                     WHERE user_id = :id
                     ";
 
-            return $this->getMultipleResults(
-                DAO::select($sql, ['id' => $id], true), 
-                $this->className
-            );
+        return $this->getMultipleResults(
+            DAO::select($sql, ['id' => $id], true),
+            $this->className
+        );
     }
     public function retrievePassword($email)
     {
@@ -46,24 +47,24 @@ class UserManager extends Manager
         // l'envoyer par mail à l'adresse mail correspondante
     }
 
-    public function add($data){
+    public function add($data)
+    {
         //$keys = ['username' , 'password', 'email']
         $keys = array_keys($data);
         //$values = ['Squalli', 'dfsyfshfbzeifbqefbq', 'sql@gmail.com']
         $values = array_values($data);
         //"username,password,email"
-        $sql = "INSERT INTO ".$this->tableName."
-                (".implode(',', $keys).") 
+        $sql = "INSERT INTO " . $this->tableName . "
+                (" . implode(',', $keys) . ") 
                 VALUES
-                ('".implode("','",$values)."')";
-                //"'Squalli', 'dfsyfshfbzeifbqefbq', 'sql@gmail.com'"
+                ('" . implode("','", $values) . "')";
+        //"'Squalli', 'dfsyfshfbzeifbqefbq', 'sql@gmail.com'"
         /*
-            INSERT INTO user (username,password,email) VALUES ('Squalli', 'dfsyfshfbzeifbqefbq', 'sql@gmail.com') 
+        INSERT INTO user (username,password,email) VALUES ('Squalli', 'dfsyfshfbzeifbqefbq', 'sql@gmail.com') 
         */
-        try{
+        try {
             return DAO::insert($sql);
-        }
-        catch(\PDOException $e){
+        } catch (\PDOException $e) {
             echo $e->getMessage();
             die();
         }
@@ -104,56 +105,72 @@ class UserManager extends Manager
         );
     }
 
-    public function checkUserByEmail($email){
+    public function checkUserByEmail($email)
+    {
         parent::connect();
 
-            $sql = "SELECT *
-                    FROM ".$this->tableName."
+        $sql = "SELECT *
+                    FROM " . $this->tableName . "
                     WHERE email = :email
                     ";
 
-            return $this->getOneOrNullResult(
-                DAO::select($sql, ['email' => $email], false), 
-                $this->className
-            );
+        return $this->getOneOrNullResult(
+            DAO::select($sql, ['email' => $email], false),
+            $this->className
+        );
     }
 
-    public function checkPseudo($pseudo){
+    public function checkPseudo($pseudo)
+    {
         parent::connect();
 
-            $sql = "SELECT *
-                    FROM ".$this->tableName."
+        $sql = "SELECT *
+                    FROM " . $this->tableName . "
                     WHERE pseudo = :pseudo
                     ";
 
-            return $this->getOneOrNullResult(
-                DAO::select($sql, ['pseudo' => $pseudo], false), 
-                $this->className
-            );
+        return $this->getOneOrNullResult(
+            DAO::select($sql, ['pseudo' => $pseudo], false),
+            $this->className
+        );
     }
 
-    public function checkPassword($email){
+    public function checkPassword($email)
+    {
         parent::connect();
 
-            $sql = "SELECT *
-                    FROM ".$this->tableName."
+        $sql = "SELECT *
+                    FROM " . $this->tableName . "
                     WHERE mail = :email
                     ";
 
-            return $this->getOneOrNullResult(
-                DAO::select($sql, ['email' => $email], false), 
-                $this->className
-            );
+        return $this->getOneOrNullResult(
+            DAO::select($sql, ['email' => $email], false),
+            $this->className
+        );
     }
 
-    public function updatePassword($id,$newPassword) {
+    public function updatePassword($id, $newPassword)
+    {
         parent::connect();
 
-            $sql = "UPDATE ".$this->tableName."
+        $sql = "UPDATE " . $this->tableName . "
                     SET password = :newPassword
-                    WHERE id_".$this->tableName." = :id
+                    WHERE id_" . $this->tableName . " = :id
                     ";
 
-            DAO::update($sql, ['id' => $id,'newPassword' => $newPassword]);
+        DAO::update($sql, ['id' => $id, 'newPassword' => $newPassword]);
+    }
+
+    public function ban($id_user)
+    {
+        parent::connect();
+
+        $sql = "UPDATE " . $this->tableName . "
+                SET ban = 1
+                WHERE id_" . $this->tableName . " = :id_user ";
+
+        DAO::update($sql, ['id' => $id_user, 'ban' => '1']);
+
     }
 }
