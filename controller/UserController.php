@@ -57,10 +57,10 @@ class UserController extends AbstractController implements ControllerInterface
         ];
     }
 
-    public function listUsers($id)
+    public function listUsers()
     {
         $userManager = new UserManager();
-
+    
         return [
             "view" => VIEW_DIR . "forum/listUsers.php",
             "data" => [
@@ -68,6 +68,7 @@ class UserController extends AbstractController implements ControllerInterface
             ]
         ];
     }
+    
 
     public function ban($id)
     {
@@ -75,8 +76,10 @@ class UserController extends AbstractController implements ControllerInterface
         $currentUser = Session::getUser();
 
         if ($currentUser->getRole() == 'ROLE_ADMIN') {
-
+            
             $userManager->ban($id);
+            
         }
+        $this->redirectTo("user", "listUsers");
     }
 }

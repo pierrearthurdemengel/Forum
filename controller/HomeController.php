@@ -25,7 +25,7 @@
             $users = $manager->findAll(['dateSignIn', 'DESC']);
 
             return [
-                "view" => VIEW_DIR."security/users.php",
+                "view" => VIEW_DIR."forum/listUsers.php",
                 "data" => [
                     "users" => $users
                 ]

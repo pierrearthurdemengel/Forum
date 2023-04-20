@@ -170,7 +170,7 @@ class UserManager extends Manager
                 SET ban = 1
                 WHERE id_" . $this->tableName . " = :id_user ";
 
-        DAO::update($sql, ['id' => $id_user, 'ban' => '1']);
+        DAO::update($sql, ['id_user' => $id_user]);
 
     }
 }
