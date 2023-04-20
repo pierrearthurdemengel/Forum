@@ -101,16 +101,15 @@ class TopicController extends AbstractController implements ControllerInterface
         $postManager = new PostManager();
 
         if (isset($_SESSION["user"])) {
-
             $user_id = Session::getUser()->getId();
-
+            
             if (isset($_POST['submit'])) {
-
+                
                 $addTopic = filter_input(INPUT_POST, "addTopic", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
                 $addPost = filter_input(INPUT_POST, "addPost", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
                 $user = Session::getUser();
-
-                if ($addTopic && $addPost && $user->getBan() == !1) {
+                
+                if ($addTopic && $addPost && $user->getBan() == 0) {
                     $idLastTopic = $topicManager->add([
                         "topicName" => $addTopic,
                         "category_id" => $id,
@@ -121,15 +120,15 @@ class TopicController extends AbstractController implements ControllerInterface
                         "text" => $addPost,
                         "user_id" => $user_id
                     ]);
-                    $this->redirectTo("topic", "listTopicsByCategory", $idLastTopic);
+                    $this->redirectTo("topic", "listTopicsByCategory", $id);
                 } else {
                     Session::addFlash("error", "Tous les champs doivent être remplis et vous ne pouvez pas poster de message si vous êtes banni.");
-                    $this->redirectTo("sujet", "listTopicsByCategory", $id);
+                    $this->redirectTo("topic", "listTopicsByCategory", $id);
                 }
             }
         } else {
             Session::addFlash("error", "Vous devez être connecté pour poster un sujet.");
-            $this->redirectTo("sujet", "listTopicsByCategory", $id);
+            $this->redirectTo("topic", "listTopicsByCategory", $id);
         }
     }
 
@@ -151,7 +150,7 @@ class TopicController extends AbstractController implements ControllerInterface
 
                 $topicManager->add(["topic_id" => $id, "user_id" => $user_id, "text" => $text]);
 
-                $this->redirectTo('forum', 'listPosts', $id);
+                $this->redirectTo('topic', 'listPosts', $id);
             }
         }
     }
@@ -178,7 +177,7 @@ class TopicController extends AbstractController implements ControllerInterface
 
 
 
-
+    
     public function delAllPostAndTopic($id)    //Boite suppression
     {
         $postManager = new PostManager();
@@ -187,15 +186,13 @@ class TopicController extends AbstractController implements ControllerInterface
         $topic = $topicManager->findOneById($id);
         $catId = $topic->getCategory()->getId();
         $posts = $postManager->findPostByTopic($id); //recupère tous les posts du Topic
-        die;
+
         foreach ($posts as $post) {
             $postManager->delPost($post->getId());
         }
         $topicManager->delete($id);
         $this->redirectTo('topic', 'listTopicsByCategory', $catId);
     }
-
-
 
 
 
@@ -214,6 +211,7 @@ class TopicController extends AbstractController implements ControllerInterface
 
         //on vérifie si l'user a les droits admin/modérateur OU si il est l'auteur du topic
         if (($user->getRole() == "ROLE_ADMIN" || $user->getRole() == "modo" || $user->getId() === $topic->getUserr()->getId()) && $user->getBan() == !1) {
+            echo "test"; die;
             // on supprime les messages du topic PUIS le topic
             $postManager->delAllPostByTopic($id);
             $topicManager->delTopic($id);

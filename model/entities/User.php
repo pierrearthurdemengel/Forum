@@ -127,6 +127,11 @@ final class User extends Entity
                 return $this->role;
         }
 
+        public function hasRole()
+        {
+                return $this->role;
+        }
+
         /**
          * Set the value of role
          *
@@ -145,7 +150,7 @@ final class User extends Entity
         }
 
 
-                /**
+        /**
          * Get the value of ban
          */
         public function getBan()

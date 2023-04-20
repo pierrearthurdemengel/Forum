@@ -35,7 +35,8 @@ class TopicManager extends Manager {
         );
     }
 
-    public function listTopicsByCategory($id){
+    public function listTopicsByCategory($id)
+    {
         parent::connect();
 
         $sql = "SELECT *,
