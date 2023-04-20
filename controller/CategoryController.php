@@ -52,7 +52,6 @@ class CategoryController extends AbstractController implements ControllerInterfa
             $categoryName = filter_input(INPUT_POST, "addCategory", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
             $user = Session::getUser();
-
             // echo "test";die; ne recupère pas $categoryName
             if ($categoryName && $user && $user->getRole() == "ROLE_ADMIN") {
 
